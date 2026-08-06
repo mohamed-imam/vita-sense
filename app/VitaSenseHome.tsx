@@ -112,6 +112,8 @@ export default function VitaSenseHome() {
         <div className="hero-visual hero-visual-enter" aria-label="VitaSense — Precision. Trust. Care.">
           <div className="orbit orbit-one" />
           <div className="orbit orbit-two" />
+          <div className="logo-pulse logo-pulse-one" />
+          <div className="logo-pulse logo-pulse-two" />
           <div className="logo-stage">
             <img src="/vitasense-logo.jpg" alt="VitaSense — Precision. Trust. Care." />
           </div>
@@ -141,7 +143,7 @@ export default function VitaSenseHome() {
               <ul>
                 {service.points.map((point) => <li key={point}>{point}</li>)}
               </ul>
-              <a href="#contact">Enquire about this test <span aria-hidden="true">↗</span></a>
+              <a href="#contact">Enquire about this test <span className="link-arrow" aria-hidden="true" /></a>
             </article>
           ))}
         </div>
