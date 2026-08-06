@@ -41,7 +41,7 @@ test("server-renders the VitaSense website", async () => {
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/i);
 });
 
-test("keeps the finished site free of starter scaffolding", async () => {
+test("keeps the finished site free of starter scaffolding and forced scrolling", async () => {
   const [page, layout, home, css, packageJson] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
@@ -53,7 +53,8 @@ test("keeps the finished site free of starter scaffolding", async () => {
   assert.match(page, /<VitaSenseHome \/>/);
   assert.match(layout, /VitaSense \| Nerve, Allergy & Circulation Testing/);
   assert.match(home, /logo-pulse-one/);
-  assert.match(css, /scroll-snap-type:\s*y mandatory/);
+  assert.doesNotMatch(css, /scroll-snap/);
+  assert.doesNotMatch(home, /addEventListener\("wheel"|scrollIntoView|handleWheel/);
   assert.match(css, /@keyframes logo-pulse-wave/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 

@@ -64,59 +64,6 @@ export default function VitaSenseHome() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    let snapping = false;
-    const snapTargets = Array.from(
-      document.querySelectorAll<HTMLElement>("main > section, main > footer"),
-    );
-
-    const handleWheel = (event: WheelEvent) => {
-      if (
-        snapping ||
-        Math.abs(event.deltaY) < 12 ||
-        window.innerWidth < 721 ||
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-        (event.target as HTMLElement).closest("input, textarea, select")
-      ) {
-        return;
-      }
-
-      const scrollTop = window.scrollY;
-      let currentIndex = 0;
-
-      snapTargets.forEach((target, index) => {
-        if (target.offsetTop <= scrollTop + 16) currentIndex = index;
-      });
-
-      const current = snapTargets[currentIndex];
-      const movingDown = event.deltaY > 0;
-      const atBottom =
-        scrollTop + window.innerHeight >=
-        current.offsetTop + current.offsetHeight - 24;
-      const atTop = scrollTop <= current.offsetTop + 24;
-      const nextIndex = movingDown ? currentIndex + 1 : currentIndex - 1;
-
-      if (
-        nextIndex < 0 ||
-        nextIndex >= snapTargets.length ||
-        (movingDown && !atBottom) ||
-        (!movingDown && !atTop)
-      ) {
-        return;
-      }
-
-      event.preventDefault();
-      snapping = true;
-      snapTargets[nextIndex].scrollIntoView({ behavior: "smooth", block: "start" });
-      window.setTimeout(() => {
-        snapping = false;
-      }, 850);
-    };
-
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    return () => window.removeEventListener("wheel", handleWheel);
-  }, []);
-
   const closeMenu = () => setMenuOpen(false);
 
   const submitRequest = (event: FormEvent<HTMLFormElement>) => {
