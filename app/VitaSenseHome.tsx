@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import Image from "next/image";
+import { ArrowDown, ArrowRight, BrainCircuit, CircleDotDashed, Droplet, HeartPulse } from "lucide-react";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -27,51 +28,19 @@ const services = [
     text: "A non-invasive check to assess blood flow and support a better understanding of your vascular health.",
     points: ["Comfort-first testing", "Easy-to-follow findings"],
   },
-];
+ ] as const;
 
 type ServiceIconName = (typeof services)[number]["icon"];
 
+const serviceIcons = {
+  neuron: { Icon: BrainCircuit, label: "Neuron" },
+  spore: { Icon: CircleDotDashed, label: "Allergen spore" },
+  "blood-drop": { Icon: Droplet, label: "Blood drop" },
+} as const;
+
 function ServiceIcon({ name }: { name: ServiceIconName }) {
-  if (name === "neuron") {
-    return (
-      <svg viewBox="0 0 48 48" role="img" aria-label="Neuron" data-icon="neuron">
-        <circle cx="24" cy="24" r="6" />
-        <circle cx="8" cy="10" r="2" />
-        <circle cx="39" cy="8" r="2" />
-        <circle cx="41" cy="29" r="2" />
-        <circle cx="34" cy="42" r="2" />
-        <circle cx="9" cy="38" r="2" />
-        <path d="M19.7 19.8 9.8 11.8M27.9 18.7 37.5 9.8M29.9 25.5l9.1 2.9M27.3 29.3l5.7 10.9M19.4 28.9l-8.8 7.7M18 24H7" />
-        <path d="M13 15.2 9.7 19M33.7 14.2l4.4 1.1M34.8 34.8l4.8 1.1M13.5 31.5l-4.3-1" />
-      </svg>
-    );
-  }
-
-  if (name === "spore") {
-    return (
-      <svg viewBox="0 0 48 48" role="img" aria-label="Allergen spore" data-icon="spore">
-        <circle cx="24" cy="24" r="11" />
-        <circle cx="24" cy="24" r="3" />
-        <circle cx="19" cy="19" r="1.4" />
-        <circle cx="29.5" cy="20" r="1.2" />
-        <circle cx="19.5" cy="29" r="1.2" />
-        <circle cx="29" cy="29" r="1.5" />
-        <path d="M24 13V7M24 41v-6M13 24H7M41 24h-6M16.2 16.2 12 12M36 36l-4.2-4.2M31.8 16.2 36 12M12 36l4.2-4.2" />
-        <circle cx="24" cy="5" r="2" />
-        <circle cx="24" cy="43" r="2" />
-        <circle cx="5" cy="24" r="2" />
-        <circle cx="43" cy="24" r="2" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg viewBox="0 0 48 48" role="img" aria-label="Blood drop" data-icon="blood-drop">
-      <path className="drop-fill" d="M24 5S11.5 20.3 11.5 29.2a12.5 12.5 0 0 0 25 0C36.5 20.3 24 5 24 5Z" />
-      <path d="M17 30.2c2.4 2 4.8 2.9 7.2 2.9 2.2 0 4.5-.8 6.8-2.5" />
-      <path d="M18.2 25.5c.7-2.7 2.4-5.8 5.1-9.3" />
-    </svg>
-  );
+  const { Icon, label } = serviceIcons[name];
+  return <Icon role="img" aria-label={label} data-icon={name} strokeWidth={1.7} />;
 }
 
 const faqs = [
@@ -150,8 +119,8 @@ export default function VitaSenseHome() {
           <h1>Clearer answers.<br /><em>Confident next steps.</em></h1>
           <p className="hero-lead">Professional nerve, allergy and circulation testing, delivered with care and explained without the clinical jargon.</p>
           <div className="hero-actions">
-            <a className="button button-primary" href="#contact">Request an appointment <span aria-hidden="true">→</span></a>
-            <a className="text-link" href="#services">Explore our tests <span aria-hidden="true">↓</span></a>
+            <a className="button button-primary" href="#contact">Request an appointment <ArrowRight aria-hidden="true" size={17} /></a>
+            <a className="text-link" href="#services">Explore our tests <ArrowDown className="down-arrow" aria-hidden="true" size={17} /></a>
           </div>
           <div className="trust-row" aria-label="Our commitments">
             <span><i>✓</i> Professional testing</span>
@@ -194,7 +163,7 @@ export default function VitaSenseHome() {
               <ul>
                 {service.points.map((point) => <li key={point}>{point}</li>)}
               </ul>
-              <a href="#contact">Enquire about this test <span className="link-arrow" aria-hidden="true" /></a>
+              <a href="#contact">Enquire about this test <span className="service-link-icon" aria-hidden="true"><ArrowRight size={16} /></span></a>
             </article>
           ))}
         </div>
@@ -206,7 +175,7 @@ export default function VitaSenseHome() {
             <span /><span /><span /><span /><span />
           </div>
           <div className="care-card" data-reveal>
-            <span className="care-icon">V</span>
+            <span className="care-icon" aria-hidden="true"><HeartPulse size={25} strokeWidth={1.7} /></span>
             <p>“We believe good healthcare starts with being heard.”</p>
             <small>The VitaSense approach</small>
           </div>
@@ -234,7 +203,7 @@ export default function VitaSenseHome() {
           <div className="section-kicker">Good to know</div>
           <h2>Questions,<br />answered simply.</h2>
           <p className="faq-intro">Still unsure which test may be right for you? Get in touch and we’ll help you find the best starting point.</p>
-          <a className="text-link dark" href="#contact">Speak with our team <span aria-hidden="true">→</span></a>
+          <a className="text-link dark" href="#contact">Speak with our team <ArrowRight aria-hidden="true" size={17} /></a>
         </div>
         <div className="faq-list" data-reveal>
           {faqs.map((faq, index) => (
@@ -270,7 +239,7 @@ export default function VitaSenseHome() {
               <label>Email address<input type="email" name="email" autoComplete="email" placeholder="you@example.com" required /></label>
               <label>I’m interested in<select name="service" defaultValue="" required><option value="" disabled>Select a test</option><option>Nerve testing</option><option>Allergy testing</option><option>Circulation testing</option><option>I’m not sure yet</option></select></label>
               <label>How can we help?<textarea name="message" placeholder="Briefly tell us what you’re experiencing" rows={3} required /></label>
-              <button className="button button-primary form-submit" type="submit">Request a call back <span aria-hidden="true">→</span></button>
+              <button className="button button-primary form-submit" type="submit">Request a call back <ArrowRight aria-hidden="true" size={17} /></button>
               <small className="privacy-note">By submitting, you agree to be contacted about your enquiry.</small>
             </>
           )}
