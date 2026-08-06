@@ -24,7 +24,7 @@ The site is designed to help prospective clients quickly understand VitaSense's 
 - TypeScript
 - Vinext and Vite
 - Tailwind CSS entry point with custom responsive CSS
-- Cloudflare-compatible Sites build output
+- Static export suitable for GitHub Pages
 
 ## Getting started
 
@@ -70,14 +70,12 @@ app/
   VitaSenseHome.tsx   Main interactive website component
   globals.css         Brand styles and responsive layouts
   layout.tsx          Site metadata and shared layout
-  page.tsx            Home route
+  page.tsx            Statically exported home route
+.github/workflows/
+  deploy-pages.yml    GitHub Pages build and deployment
 public/
   vitasense-logo.jpg  VitaSense logo
   og.png              Social-sharing preview
-worker/
-  index.ts            Cloudflare worker entry point
-.openai/
-  hosting.json        Sites hosting configuration
 ```
 
 ## Appointment form
@@ -90,7 +88,16 @@ The original supplied logo is retained in the project root for reference. The we
 
 ## Deployment
 
-The project produces Cloudflare-compatible output through Vinext. Run a successful production build before publishing.
+Every push to `main` runs the GitHub Pages workflow, builds a static site, and deploys the contents of `dist/client`.
+
+To enable the public test site:
+
+1. Make the GitHub repository public.
+2. Open **Settings > Pages** in the repository.
+3. Set **Source** to **GitHub Actions**.
+4. Push `main`, or run the workflow manually from the **Actions** tab.
+
+The test URL will be `https://mohamed-imam.github.io/vita-sense/`.
 
 ## License
 
