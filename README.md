@@ -1,5 +1,7 @@
 # VitaSense
 
+[![Deploy to GitHub Pages](https://github.com/mohamed-imam/vita-sense/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/mohamed-imam/vita-sense/actions/workflows/deploy-pages.yml)
+
 A modern, responsive healthcare website for **VitaSense**, presenting professional nerve, allergy, and circulation testing with a calm, trustworthy visual identity.
 
 ## Overview
