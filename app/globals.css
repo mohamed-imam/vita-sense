@@ -106,7 +106,9 @@ h1 em, h2 em { color: var(--teal-dark); font-family: Georgia, 'Times New Roman',
 .service-card:hover { z-index: 2; transform: translateY(-7px); background: var(--cream); box-shadow: 0 22px 55px rgba(6,39,91,.10); }
 .service-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 62px; }
 .service-top span { color: #8b9ba9; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
-.service-top i { width: 50px; height: 50px; display: grid; place-items: center; color: var(--teal); background: var(--mist); border-radius: 50%; font-size: 28px; font-style: normal; }
+.service-icon { width: 54px; height: 54px; display: grid; place-items: center; color: var(--teal-dark); background: var(--mist); border: 1px solid rgba(0, 166, 157, .14); border-radius: 50%; }
+.service-icon svg { width: 31px; height: 31px; overflow: visible; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.service-icon .drop-fill { fill: currentColor; fill-opacity: .12; }
 .service-card h3 { margin-bottom: 16px; color: var(--navy); font-size: 27px; letter-spacing: -.025em; font-weight: 560; }
 .service-card > p { min-height: 78px; color: var(--muted); line-height: 1.65; }
 .service-card ul { margin: 24px 0 30px; padding: 0; list-style: none; color: #405369; font-size: 13px; }

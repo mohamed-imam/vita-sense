@@ -34,6 +34,9 @@ test("server-renders the VitaSense website", async () => {
   assert.match(html, /Nerve testing/);
   assert.match(html, /Allergy testing/);
   assert.match(html, /Circulation testing/);
+  assert.match(html, /data-icon="neuron"/);
+  assert.match(html, /data-icon="spore"/);
+  assert.match(html, /data-icon="blood-drop"/);
   assert.match(html, /id="services"/);
   assert.match(html, /id="approach"/);
   assert.match(html, /id="faq"/);

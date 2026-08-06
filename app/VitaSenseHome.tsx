@@ -8,23 +8,71 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const services = [
   {
     number: "01",
+    icon: "neuron",
     title: "Nerve testing",
     text: "A focused assessment to help understand changes in sensation, tingling, numbness or discomfort.",
     points: ["Clear, guided process", "Results explained simply"],
   },
   {
     number: "02",
+    icon: "spore",
     title: "Allergy testing",
     text: "Practical testing designed to identify possible sensitivities and give you clearer next steps.",
     points: ["Considered assessment", "Personalised guidance"],
   },
   {
     number: "03",
+    icon: "blood-drop",
     title: "Circulation testing",
     text: "A non-invasive check to assess blood flow and support a better understanding of your vascular health.",
     points: ["Comfort-first testing", "Easy-to-follow findings"],
   },
 ];
+
+type ServiceIconName = (typeof services)[number]["icon"];
+
+function ServiceIcon({ name }: { name: ServiceIconName }) {
+  if (name === "neuron") {
+    return (
+      <svg viewBox="0 0 48 48" role="img" aria-label="Neuron" data-icon="neuron">
+        <circle cx="24" cy="24" r="6" />
+        <circle cx="8" cy="10" r="2" />
+        <circle cx="39" cy="8" r="2" />
+        <circle cx="41" cy="29" r="2" />
+        <circle cx="34" cy="42" r="2" />
+        <circle cx="9" cy="38" r="2" />
+        <path d="M19.7 19.8 9.8 11.8M27.9 18.7 37.5 9.8M29.9 25.5l9.1 2.9M27.3 29.3l5.7 10.9M19.4 28.9l-8.8 7.7M18 24H7" />
+        <path d="M13 15.2 9.7 19M33.7 14.2l4.4 1.1M34.8 34.8l4.8 1.1M13.5 31.5l-4.3-1" />
+      </svg>
+    );
+  }
+
+  if (name === "spore") {
+    return (
+      <svg viewBox="0 0 48 48" role="img" aria-label="Allergen spore" data-icon="spore">
+        <circle cx="24" cy="24" r="11" />
+        <circle cx="24" cy="24" r="3" />
+        <circle cx="19" cy="19" r="1.4" />
+        <circle cx="29.5" cy="20" r="1.2" />
+        <circle cx="19.5" cy="29" r="1.2" />
+        <circle cx="29" cy="29" r="1.5" />
+        <path d="M24 13V7M24 41v-6M13 24H7M41 24h-6M16.2 16.2 12 12M36 36l-4.2-4.2M31.8 16.2 36 12M12 36l4.2-4.2" />
+        <circle cx="24" cy="5" r="2" />
+        <circle cx="24" cy="43" r="2" />
+        <circle cx="5" cy="24" r="2" />
+        <circle cx="43" cy="24" r="2" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 48 48" role="img" aria-label="Blood drop" data-icon="blood-drop">
+      <path className="drop-fill" d="M24 5S11.5 20.3 11.5 29.2a12.5 12.5 0 0 0 25 0C36.5 20.3 24 5 24 5Z" />
+      <path d="M17 30.2c2.4 2 4.8 2.9 7.2 2.9 2.2 0 4.5-.8 6.8-2.5" />
+      <path d="M18.2 25.5c.7-2.7 2.4-5.8 5.1-9.3" />
+    </svg>
+  );
+}
 
 const faqs = [
   {
@@ -140,7 +188,7 @@ export default function VitaSenseHome() {
         <div className="service-grid">
           {services.map((service, index) => (
             <article className="service-card" data-reveal style={{ "--reveal-delay": `${index * 110}ms` } as React.CSSProperties} key={service.title}>
-              <div className="service-top"><span>{service.number}</span><i aria-hidden="true">{index === 0 ? "⌁" : index === 1 ? "✦" : "◌"}</i></div>
+              <div className="service-top"><span>{service.number}</span><span className="service-icon"><ServiceIcon name={service.icon} /></span></div>
               <h3>{service.title}</h3>
               <p>{service.text}</p>
               <ul>
