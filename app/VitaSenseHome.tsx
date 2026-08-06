@@ -3,6 +3,8 @@
 import { FormEvent, useEffect, useState } from "react";
 import Image from "next/image";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 const services = [
   {
     number: "01",
@@ -126,7 +128,7 @@ export default function VitaSenseHome() {
     <main>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="VitaSense home" onClick={closeMenu}>
-          <span className="brand-mark" aria-hidden="true"><Image src="/vitasense-logo.jpg" width={1254} height={1254} alt="" priority /></span>
+          <span className="brand-mark" aria-hidden="true"><Image src={`${basePath}/vitasense-logo.jpg`} width={1254} height={1254} alt="" priority /></span>
           <span className="brand-name">Vita<span>Sense</span></span>
         </a>
         <button
@@ -169,7 +171,7 @@ export default function VitaSenseHome() {
           <div className="logo-pulse logo-pulse-one" />
           <div className="logo-pulse logo-pulse-two" />
           <div className="logo-stage">
-            <Image src="/vitasense-logo.jpg" width={1254} height={1254} alt="VitaSense — Precision. Trust. Care." priority />
+            <Image src={`${basePath}/vitasense-logo.jpg`} width={1254} height={1254} alt="VitaSense — Precision. Trust. Care." priority />
           </div>
           <div className="floating-card card-top">
             <span className="pulse-dot" />
@@ -282,7 +284,7 @@ export default function VitaSenseHome() {
 
       <footer>
         <a className="brand footer-brand" href="#top" aria-label="VitaSense home">
-          <span className="brand-mark" aria-hidden="true"><Image src="/vitasense-logo.jpg" width={1254} height={1254} alt="" /></span>
+          <span className="brand-mark" aria-hidden="true"><Image src={`${basePath}/vitasense-logo.jpg`} width={1254} height={1254} alt="" /></span>
           <span className="brand-name">Vita<span>Sense</span></span>
         </a>
         <p>Professional nerve, allergy and circulation testing.</p>
