@@ -1,0 +1,220 @@
+"use client";
+
+import { FormEvent, useState } from "react";
+
+const services = [
+  {
+    number: "01",
+    title: "Nerve testing",
+    text: "A focused assessment to help understand changes in sensation, tingling, numbness or discomfort.",
+    points: ["Clear, guided process", "Results explained simply"],
+  },
+  {
+    number: "02",
+    title: "Allergy testing",
+    text: "Practical testing designed to identify possible sensitivities and give you clearer next steps.",
+    points: ["Considered assessment", "Personalised guidance"],
+  },
+  {
+    number: "03",
+    title: "Circulation testing",
+    text: "A non-invasive check to assess blood flow and support a better understanding of your vascular health.",
+    points: ["Comfort-first testing", "Easy-to-follow findings"],
+  },
+];
+
+const faqs = [
+  {
+    question: "What happens during an appointment?",
+    answer: "We begin by listening to your concerns, then explain the test before we start. Your results and suitable next steps are discussed in clear, everyday language.",
+  },
+  {
+    question: "How should I prepare?",
+    answer: "Preparation can vary by test. Once your appointment is confirmed, we will send simple guidance tailored to the assessment you have booked.",
+  },
+  {
+    question: "Can I ask questions about my results?",
+    answer: "Absolutely. We make space to talk through your findings so you leave with a clear understanding of what they mean and what to do next.",
+  },
+];
+
+export default function VitaSenseHome() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [openFaq, setOpenFaq] = useState(0);
+  const [sent, setSent] = useState(false);
+
+  const closeMenu = () => setMenuOpen(false);
+
+  const submitRequest = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSent(true);
+  };
+
+  return (
+    <main>
+      <header className="site-header">
+        <a className="brand" href="#top" aria-label="VitaSense home" onClick={closeMenu}>
+          <span className="brand-mark" aria-hidden="true"><img src="/vitasense-logo.jpg" alt="" /></span>
+          <span className="brand-name">Vita<span>Sense</span></span>
+        </a>
+        <button
+          className="menu-button"
+          type="button"
+          aria-label="Toggle navigation"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span />
+          <span />
+        </button>
+        <nav className={menuOpen ? "nav-links is-open" : "nav-links"} aria-label="Main navigation">
+          <a href="#services" onClick={closeMenu}>Tests</a>
+          <a href="#approach" onClick={closeMenu}>Our approach</a>
+          <a href="#faq" onClick={closeMenu}>FAQs</a>
+          <a className="nav-cta" href="#contact" onClick={closeMenu}>Request an appointment</a>
+        </nav>
+      </header>
+
+      <section className="hero" id="top">
+        <div className="hero-copy">
+          <div className="eyebrow"><span /> Precision-led health testing</div>
+          <h1>Clearer answers.<br /><em>Confident next steps.</em></h1>
+          <p className="hero-lead">Professional nerve, allergy and circulation testing, delivered with care and explained without the clinical jargon.</p>
+          <div className="hero-actions">
+            <a className="button button-primary" href="#contact">Request an appointment <span aria-hidden="true">→</span></a>
+            <a className="text-link" href="#services">Explore our tests <span aria-hidden="true">↓</span></a>
+          </div>
+          <div className="trust-row" aria-label="Our commitments">
+            <span><i>✓</i> Professional testing</span>
+            <span><i>✓</i> Clear explanations</span>
+            <span><i>✓</i> Care-led experience</span>
+          </div>
+        </div>
+
+        <div className="hero-visual" aria-label="VitaSense — Precision. Trust. Care.">
+          <div className="orbit orbit-one" />
+          <div className="orbit orbit-two" />
+          <div className="logo-stage">
+            <img src="/vitasense-logo.jpg" alt="VitaSense — Precision. Trust. Care." />
+          </div>
+          <div className="floating-card card-top">
+            <span className="pulse-dot" />
+            <div><small>Your health, made clearer</small><strong>Listen. Test. Explain.</strong></div>
+          </div>
+          <div className="floating-card card-bottom">
+            <strong>3</strong>
+            <div><small>Focused services</small><span>Nerve · Allergy · Circulation</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="intro-section" id="services">
+        <div className="section-kicker">How we can help</div>
+        <div className="section-heading">
+          <h2>Focused testing.<br />Thoughtful care.</h2>
+          <p>When something doesn’t feel right, clarity matters. Our assessments are designed to give you useful insight in a calm, supportive setting.</p>
+        </div>
+        <div className="service-grid">
+          {services.map((service, index) => (
+            <article className="service-card" key={service.title}>
+              <div className="service-top"><span>{service.number}</span><i aria-hidden="true">{index === 0 ? "⌁" : index === 1 ? "✦" : "◌"}</i></div>
+              <h3>{service.title}</h3>
+              <p>{service.text}</p>
+              <ul>
+                {service.points.map((point) => <li key={point}>{point}</li>)}
+              </ul>
+              <a href="#contact">Enquire about this test <span aria-hidden="true">↗</span></a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="approach-section" id="approach">
+        <div className="approach-visual">
+          <div className="signal-lines" aria-hidden="true">
+            <span /><span /><span /><span /><span />
+          </div>
+          <div className="care-card">
+            <span className="care-icon">V</span>
+            <p>“We believe good healthcare starts with being heard.”</p>
+            <small>The VitaSense approach</small>
+          </div>
+        </div>
+        <div className="approach-copy">
+          <div className="section-kicker light">Why VitaSense</div>
+          <h2>Clinical precision,<br /><em>human care.</em></h2>
+          <p>Testing can feel uncertain. We make the experience straightforward, respectful and centred around you — from your first question to your results.</p>
+          <ol className="steps-list">
+            <li><span>01</span><div><strong>We listen first</strong><p>Your symptoms and concerns shape the assessment.</p></div></li>
+            <li><span>02</span><div><strong>We test with care</strong><p>A considered, comfort-focused experience at every step.</p></div></li>
+            <li><span>03</span><div><strong>We explain clearly</strong><p>Useful answers and practical next steps, without confusion.</p></div></li>
+          </ol>
+        </div>
+      </section>
+
+      <section className="values-strip">
+        <div><strong>Precision</strong><span>Thoughtful assessments</span></div>
+        <div><strong>Trust</strong><span>Clear, honest guidance</span></div>
+        <div><strong>Care</strong><span>Your comfort matters</span></div>
+      </section>
+
+      <section className="faq-section" id="faq">
+        <div>
+          <div className="section-kicker">Good to know</div>
+          <h2>Questions,<br />answered simply.</h2>
+          <p className="faq-intro">Still unsure which test may be right for you? Get in touch and we’ll help you find the best starting point.</p>
+          <a className="text-link dark" href="#contact">Speak with our team <span aria-hidden="true">→</span></a>
+        </div>
+        <div className="faq-list">
+          {faqs.map((faq, index) => (
+            <div className={openFaq === index ? "faq-item open" : "faq-item"} key={faq.question}>
+              <button type="button" onClick={() => setOpenFaq(openFaq === index ? -1 : index)} aria-expanded={openFaq === index}>
+                <span>{faq.question}</span><i aria-hidden="true">+</i>
+              </button>
+              <div className="faq-answer"><p>{faq.answer}</p></div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="contact-section" id="contact">
+        <div className="contact-copy">
+          <div className="section-kicker light">Take the first step</div>
+          <h2>Ready for a little<br /><em>more clarity?</em></h2>
+          <p>Tell us what’s been concerning you. Our team will get in touch to discuss the most suitable assessment and appointment options.</p>
+          <div className="contact-note"><span>i</span><p>If you have urgent or severe symptoms, contact your doctor or emergency services.</p></div>
+        </div>
+        <form className="contact-form" onSubmit={submitRequest}>
+          {sent ? (
+            <div className="success-message" role="status">
+              <span>✓</span>
+              <h3>Thank you</h3>
+              <p>Your request has been noted. Connect this form to your preferred email or booking service before launch to receive enquiries.</p>
+              <button type="button" className="text-link dark" onClick={() => setSent(false)}>Send another request</button>
+            </div>
+          ) : (
+            <>
+              <div className="form-heading"><span>Appointment request</span><small>All fields are required</small></div>
+              <label>Full name<input type="text" name="name" autoComplete="name" placeholder="Your name" required /></label>
+              <label>Email address<input type="email" name="email" autoComplete="email" placeholder="you@example.com" required /></label>
+              <label>I’m interested in<select name="service" defaultValue="" required><option value="" disabled>Select a test</option><option>Nerve testing</option><option>Allergy testing</option><option>Circulation testing</option><option>I’m not sure yet</option></select></label>
+              <label>How can we help?<textarea name="message" placeholder="Briefly tell us what you’re experiencing" rows={3} required /></label>
+              <button className="button button-primary form-submit" type="submit">Request a call back <span aria-hidden="true">→</span></button>
+              <small className="privacy-note">By submitting, you agree to be contacted about your enquiry.</small>
+            </>
+          )}
+        </form>
+      </section>
+
+      <footer>
+        <a className="brand footer-brand" href="#top" aria-label="VitaSense home">
+          <span className="brand-mark" aria-hidden="true"><img src="/vitasense-logo.jpg" alt="" /></span>
+          <span className="brand-name">Vita<span>Sense</span></span>
+        </a>
+        <p>Professional nerve, allergy and circulation testing.</p>
+        <div className="footer-links"><a href="#services">Tests</a><a href="#approach">Our approach</a><a href="#faq">FAQs</a><a href="#contact">Contact</a></div>
+        <div className="footer-bottom"><span>© {new Date().getFullYear()} VitaSense. All rights reserved.</span><span>Precision · Trust · Care</span></div>
+      </footer>
+    </main>
+  );
+}
