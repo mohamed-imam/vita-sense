@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 const services = [
   {
@@ -43,6 +43,24 @@ export default function VitaSenseHome() {
   const [openFaq, setOpenFaq] = useState(0);
   const [sent, setSent] = useState(false);
 
+  useEffect(() => {
+    const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -45px" },
+    );
+
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
   const closeMenu = () => setMenuOpen(false);
 
   const submitRequest = (event: FormEvent<HTMLFormElement>) => {
@@ -76,7 +94,7 @@ export default function VitaSenseHome() {
       </header>
 
       <section className="hero" id="top">
-        <div className="hero-copy">
+        <div className="hero-copy hero-enter">
           <div className="eyebrow"><span /> Precision-led health testing</div>
           <h1>Clearer answers.<br /><em>Confident next steps.</em></h1>
           <p className="hero-lead">Professional nerve, allergy and circulation testing, delivered with care and explained without the clinical jargon.</p>
@@ -91,7 +109,7 @@ export default function VitaSenseHome() {
           </div>
         </div>
 
-        <div className="hero-visual" aria-label="VitaSense — Precision. Trust. Care.">
+        <div className="hero-visual hero-visual-enter" aria-label="VitaSense — Precision. Trust. Care.">
           <div className="orbit orbit-one" />
           <div className="orbit orbit-two" />
           <div className="logo-stage">
@@ -109,14 +127,14 @@ export default function VitaSenseHome() {
       </section>
 
       <section className="intro-section" id="services">
-        <div className="section-kicker">How we can help</div>
-        <div className="section-heading">
+        <div className="section-kicker" data-reveal>How we can help</div>
+        <div className="section-heading" data-reveal>
           <h2>Focused testing.<br />Thoughtful care.</h2>
           <p>When something doesn’t feel right, clarity matters. Our assessments are designed to give you useful insight in a calm, supportive setting.</p>
         </div>
         <div className="service-grid">
           {services.map((service, index) => (
-            <article className="service-card" key={service.title}>
+            <article className="service-card" data-reveal style={{ "--reveal-delay": `${index * 110}ms` } as React.CSSProperties} key={service.title}>
               <div className="service-top"><span>{service.number}</span><i aria-hidden="true">{index === 0 ? "⌁" : index === 1 ? "✦" : "◌"}</i></div>
               <h3>{service.title}</h3>
               <p>{service.text}</p>
@@ -134,13 +152,13 @@ export default function VitaSenseHome() {
           <div className="signal-lines" aria-hidden="true">
             <span /><span /><span /><span /><span />
           </div>
-          <div className="care-card">
+          <div className="care-card" data-reveal>
             <span className="care-icon">V</span>
             <p>“We believe good healthcare starts with being heard.”</p>
             <small>The VitaSense approach</small>
           </div>
         </div>
-        <div className="approach-copy">
+        <div className="approach-copy" data-reveal>
           <div className="section-kicker light">Why VitaSense</div>
           <h2>Clinical precision,<br /><em>human care.</em></h2>
           <p>Testing can feel uncertain. We make the experience straightforward, respectful and centred around you — from your first question to your results.</p>
@@ -153,19 +171,19 @@ export default function VitaSenseHome() {
       </section>
 
       <section className="values-strip">
-        <div><strong>Precision</strong><span>Thoughtful assessments</span></div>
-        <div><strong>Trust</strong><span>Clear, honest guidance</span></div>
-        <div><strong>Care</strong><span>Your comfort matters</span></div>
+        <div data-reveal><strong>Precision</strong><span>Thoughtful assessments</span></div>
+        <div data-reveal style={{ "--reveal-delay": "100ms" } as React.CSSProperties}><strong>Trust</strong><span>Clear, honest guidance</span></div>
+        <div data-reveal style={{ "--reveal-delay": "200ms" } as React.CSSProperties}><strong>Care</strong><span>Your comfort matters</span></div>
       </section>
 
       <section className="faq-section" id="faq">
-        <div>
+        <div data-reveal>
           <div className="section-kicker">Good to know</div>
           <h2>Questions,<br />answered simply.</h2>
           <p className="faq-intro">Still unsure which test may be right for you? Get in touch and we’ll help you find the best starting point.</p>
           <a className="text-link dark" href="#contact">Speak with our team <span aria-hidden="true">→</span></a>
         </div>
-        <div className="faq-list">
+        <div className="faq-list" data-reveal>
           {faqs.map((faq, index) => (
             <div className={openFaq === index ? "faq-item open" : "faq-item"} key={faq.question}>
               <button type="button" onClick={() => setOpenFaq(openFaq === index ? -1 : index)} aria-expanded={openFaq === index}>
@@ -178,13 +196,13 @@ export default function VitaSenseHome() {
       </section>
 
       <section className="contact-section" id="contact">
-        <div className="contact-copy">
+        <div className="contact-copy" data-reveal>
           <div className="section-kicker light">Take the first step</div>
           <h2>Ready for a little<br /><em>more clarity?</em></h2>
           <p>Tell us what’s been concerning you. Our team will get in touch to discuss the most suitable assessment and appointment options.</p>
           <div className="contact-note"><span>i</span><p>If you have urgent or severe symptoms, contact your doctor or emergency services.</p></div>
         </div>
-        <form className="contact-form" onSubmit={submitRequest}>
+        <form className="contact-form" data-reveal onSubmit={submitRequest}>
           {sent ? (
             <div className="success-message" role="status">
               <span>✓</span>
