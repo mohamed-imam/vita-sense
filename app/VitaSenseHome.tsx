@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import Image from "next/image";
-import { ArrowDown, ArrowRight, BrainCircuit, CircleDotDashed, Droplet, HeartPulse } from "lucide-react";
+import { ArrowDown, ArrowRight, BrainCircuit, Check, CheckCircle2, CircleDotDashed, Droplet, HeartPulse, Info, Plus, ShieldCheck } from "lucide-react";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -28,7 +28,7 @@ const services = [
     text: "A non-invasive check to assess blood flow and support a better understanding of your vascular health.",
     points: ["Comfort-first testing", "Easy-to-follow findings"],
   },
- ] as const;
+] as const;
 
 type ServiceIconName = (typeof services)[number]["icon"];
 
@@ -99,13 +99,14 @@ export default function VitaSenseHome() {
           className="menu-button"
           type="button"
           aria-label="Toggle navigation"
+          aria-controls="main-navigation"
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <span />
           <span />
         </button>
-        <nav className={menuOpen ? "nav-links is-open" : "nav-links"} aria-label="Main navigation">
+        <nav id="main-navigation" className={menuOpen ? "nav-links is-open" : "nav-links"} aria-label="Main navigation">
           <a href="#services" onClick={closeMenu}>Tests</a>
           <a href="#approach" onClick={closeMenu}>Our approach</a>
           <a href="#faq" onClick={closeMenu}>FAQs</a>
@@ -123,9 +124,9 @@ export default function VitaSenseHome() {
             <a className="text-link" href="#services">Explore our tests <ArrowDown className="down-arrow" aria-hidden="true" size={17} /></a>
           </div>
           <div className="trust-row" aria-label="Our commitments">
-            <span><i>✓</i> Professional testing</span>
-            <span><i>✓</i> Clear explanations</span>
-            <span><i>✓</i> Care-led experience</span>
+            <span><ShieldCheck aria-hidden="true" size={16} /> Professional testing</span>
+            <span><CheckCircle2 aria-hidden="true" size={16} /> Clear explanations</span>
+            <span><HeartPulse aria-hidden="true" size={16} /> Care-led experience</span>
           </div>
         </div>
 
@@ -209,7 +210,7 @@ export default function VitaSenseHome() {
           {faqs.map((faq, index) => (
             <div className={openFaq === index ? "faq-item open" : "faq-item"} key={faq.question}>
               <button type="button" onClick={() => setOpenFaq(openFaq === index ? -1 : index)} aria-expanded={openFaq === index}>
-                <span>{faq.question}</span><i aria-hidden="true">+</i>
+                <span>{faq.question}</span><span className="faq-toggle" aria-hidden="true"><Plus size={17} /></span>
               </button>
               <div className="faq-answer"><p>{faq.answer}</p></div>
             </div>
@@ -222,12 +223,12 @@ export default function VitaSenseHome() {
           <div className="section-kicker light">Take the first step</div>
           <h2>Ready for a little<br /><em>more clarity?</em></h2>
           <p>Tell us what’s been concerning you. Our team will get in touch to discuss the most suitable assessment and appointment options.</p>
-          <div className="contact-note"><span>i</span><p>If you have urgent or severe symptoms, contact your doctor or emergency services.</p></div>
+          <div className="contact-note"><span aria-hidden="true"><Info size={13} /></span><p>If you have urgent or severe symptoms, contact your doctor or emergency services.</p></div>
         </div>
         <form className="contact-form" data-reveal onSubmit={submitRequest}>
           {sent ? (
             <div className="success-message" role="status">
-              <span>✓</span>
+              <span aria-hidden="true"><Check size={25} /></span>
               <h3>Thank you</h3>
               <p>Your request has been noted. Connect this form to your preferred email or booking service before launch to receive enquiries.</p>
               <button type="button" className="text-link dark" onClick={() => setSent(false)}>Send another request</button>
@@ -240,7 +241,7 @@ export default function VitaSenseHome() {
               <label>I’m interested in<select name="service" defaultValue="" required><option value="" disabled>Select a test</option><option>Nerve testing</option><option>Allergy testing</option><option>Circulation testing</option><option>I’m not sure yet</option></select></label>
               <label>How can we help?<textarea name="message" placeholder="Briefly tell us what you’re experiencing" rows={3} required /></label>
               <button className="button button-primary form-submit" type="submit">Request a call back <ArrowRight aria-hidden="true" size={17} /></button>
-              <small className="privacy-note">By submitting, you agree to be contacted about your enquiry.</small>
+              <small className="privacy-note">Your details will only be used to respond to this enquiry.</small>
             </>
           )}
         </form>
