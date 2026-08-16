@@ -9,7 +9,7 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const services = [
   {
     number: "01",
-    icon: "/service-icons/nerve-test.png",
+    icon: "/service-icons/nerve-test-transparent.png",
     iconAlt: "Neuron symbol for nerve testing",
     title: "Nerve testing",
     text: "A focused assessment to help understand changes in sensation, tingling, numbness or discomfort.",
@@ -17,7 +17,7 @@ const services = [
   },
   {
     number: "02",
-    icon: "/service-icons/allergy-test.png",
+    icon: "/service-icons/allergy-test-transparent.png",
     iconAlt: "Allergen spore symbol for allergy testing",
     title: "Allergy testing",
     text: "Practical testing designed to identify possible sensitivities and give you clearer next steps.",
@@ -25,7 +25,7 @@ const services = [
   },
   {
     number: "03",
-    icon: "/service-icons/circulation-test.png",
+    icon: "/service-icons/circulation-test-transparent.png",
     iconAlt: "Blood drop and circulation symbol for circulation testing",
     title: "Circulation testing",
     text: "A non-invasive check to assess blood flow and support a better understanding of your vascular health.",
