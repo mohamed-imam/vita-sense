@@ -34,9 +34,9 @@ test("server-renders the VitaSense website", async () => {
   assert.match(html, /Nerve testing/);
   assert.match(html, /Allergy testing/);
   assert.match(html, /Circulation testing/);
-  assert.match(html, /service-icons\/nerve-test-transparent\.png/);
-  assert.match(html, /service-icons\/allergy-test-transparent\.png/);
-  assert.match(html, /service-icons\/circulation-test-transparent\.png/);
+  assert.match(html, /service-icons\/nerve-test\.svg/);
+  assert.match(html, /service-icons\/allergy-test\.svg/);
+  assert.match(html, /service-icons\/circulation-test\.svg/);
   assert.match(html, /id="services"/);
   assert.match(html, /id="approach"/);
   assert.match(html, /id="faq"/);
@@ -64,9 +64,9 @@ test("keeps the finished site free of starter scaffolding and forced scrolling",
   await Promise.all([
     access(new URL("../public/vitasense-logo.jpg", import.meta.url)),
     access(new URL("../public/og.png", import.meta.url)),
-    access(new URL("../public/service-icons/nerve-test-transparent.png", import.meta.url)),
-    access(new URL("../public/service-icons/allergy-test-transparent.png", import.meta.url)),
-    access(new URL("../public/service-icons/circulation-test-transparent.png", import.meta.url)),
+    access(new URL("../public/service-icons/nerve-test.svg", import.meta.url)),
+    access(new URL("../public/service-icons/allergy-test.svg", import.meta.url)),
+    access(new URL("../public/service-icons/circulation-test.svg", import.meta.url)),
   ]);
   await assert.rejects(
     access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)),
