@@ -145,10 +145,10 @@ export default function VitaSenseHome() {
           {services.map((service, index) => (
             <article className="service-card" data-reveal style={{ "--reveal-delay": `${index * 110}ms` } as React.CSSProperties} key={service.title}>
               <div className="service-top">
-                <span>{service.number}</span>
                 <span className="service-icon">
                   <Image src={`${basePath}${service.icon}`} width={1200} height={1200} alt={service.iconAlt} />
                 </span>
+                <span className="service-number">{service.number}</span>
               </div>
               <h3>{service.title}</h3>
               <p>{service.text}</p>
