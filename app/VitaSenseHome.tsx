@@ -2,46 +2,36 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import Image from "next/image";
-import { ArrowDown, ArrowRight, BrainCircuit, Check, CheckCircle2, CircleDotDashed, Droplet, HeartPulse, Info, Plus, ShieldCheck } from "lucide-react";
+import { ArrowDown, ArrowRight, Check, CheckCircle2, HeartPulse, Info, Plus, ShieldCheck } from "lucide-react";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const services = [
   {
     number: "01",
-    icon: "neuron",
+    icon: "/service-icons/nerve-test.png",
+    iconAlt: "Neuron symbol for nerve testing",
     title: "Nerve testing",
     text: "A focused assessment to help understand changes in sensation, tingling, numbness or discomfort.",
     points: ["Clear, guided process", "Results explained simply"],
   },
   {
     number: "02",
-    icon: "spore",
+    icon: "/service-icons/allergy-test.png",
+    iconAlt: "Allergen spore symbol for allergy testing",
     title: "Allergy testing",
     text: "Practical testing designed to identify possible sensitivities and give you clearer next steps.",
     points: ["Considered assessment", "Personalised guidance"],
   },
   {
     number: "03",
-    icon: "blood-drop",
+    icon: "/service-icons/circulation-test.png",
+    iconAlt: "Blood drop and circulation symbol for circulation testing",
     title: "Circulation testing",
     text: "A non-invasive check to assess blood flow and support a better understanding of your vascular health.",
     points: ["Comfort-first testing", "Easy-to-follow findings"],
   },
 ] as const;
-
-type ServiceIconName = (typeof services)[number]["icon"];
-
-const serviceIcons = {
-  neuron: { Icon: BrainCircuit, label: "Neuron" },
-  spore: { Icon: CircleDotDashed, label: "Allergen spore" },
-  "blood-drop": { Icon: Droplet, label: "Blood drop" },
-} as const;
-
-function ServiceIcon({ name }: { name: ServiceIconName }) {
-  const { Icon, label } = serviceIcons[name];
-  return <Icon role="img" aria-label={label} data-icon={name} strokeWidth={1.7} />;
-}
 
 const faqs = [
   {
@@ -138,13 +128,9 @@ export default function VitaSenseHome() {
           <div className="logo-stage">
             <Image src={`${basePath}/vitasense-logo.jpg`} width={1254} height={1254} alt="VitaSense — Precision. Trust. Care." priority />
           </div>
-          <div className="floating-card card-top">
+          <div className="hero-visual-note">
             <span className="pulse-dot" />
-            <div><small>Your health, made clearer</small><strong>Listen. Test. Explain.</strong></div>
-          </div>
-          <div className="floating-card card-bottom">
-            <strong>3</strong>
-            <div><small>Focused services</small><span>Nerve · Allergy · Circulation</span></div>
+            <div><small>Our approach</small><strong>Listen. Test. Explain.</strong></div>
           </div>
         </div>
       </section>
@@ -158,7 +144,12 @@ export default function VitaSenseHome() {
         <div className="service-grid">
           {services.map((service, index) => (
             <article className="service-card" data-reveal style={{ "--reveal-delay": `${index * 110}ms` } as React.CSSProperties} key={service.title}>
-              <div className="service-top"><span>{service.number}</span><span className="service-icon"><ServiceIcon name={service.icon} /></span></div>
+              <div className="service-top">
+                <span>{service.number}</span>
+                <span className="service-icon">
+                  <Image src={`${basePath}${service.icon}`} width={1200} height={1200} alt={service.iconAlt} />
+                </span>
+              </div>
               <h3>{service.title}</h3>
               <p>{service.text}</p>
               <ul>
