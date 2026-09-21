@@ -83,9 +83,9 @@ public/
 
 ## Appointment form
 
-The appointment form posts to FormSubmit for delivery to `info@vita-sense.com` and sends a confirmation response to the visitor. The recipient address must approve FormSubmit's one-time activation email before live enquiries are delivered.
+The appointment form posts to a Google Apps Script web app owned by the VitaSense Google Workspace account. The script delivers each request to `info@vita-sense.com` and sends a confirmation response to the visitor without navigating away from the website.
 
-FormSubmit currently performs its own human-verification step. Moving that check into the site requires a server-side endpoint for CAPTCHA token validation and email delivery; GitHub Pages alone cannot securely hold the required secrets.
+The form uses a hidden honeypot field for basic spam filtering. The Apps Script deployment must remain available to “Anyone” and execute as the Workspace account that is authorised to send from `info@vita-sense.com`.
 
 ## Brand assets
 

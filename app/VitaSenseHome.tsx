@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Activity, ArrowDown, ArrowRight, BrainCircuit, Check, CheckCircle2, Eye, HeartPulse, Info, Plus, ShieldCheck, TestTubeDiagonal } from "lucide-react";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const appointmentEndpoint = "https://script.google.com/macros/s/AKfycbzpvWQiMYgpodilD8IkLhHUPz56SNI39to1UMRiiMyFKzfWqms6UoFaH4gJ97dDjv3saw/exec";
 
 const services = [
   {
@@ -64,16 +65,24 @@ export default function VitaSenseHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
   const [selectedHeroTest, setSelectedHeroTest] = useState(0);
+  const formFrameRef = useRef<HTMLIFrameElement>(null);
+  const submissionTimeoutRef = useRef<number | undefined>(undefined);
   const activeHeroTest = services[selectedHeroTest];
 
   useEffect(() => {
-    const currentUrl = new URL(window.location.href);
-    let sentFrame: number | undefined;
-    if (currentUrl.searchParams.get("sent") === "1") {
-      window.history.replaceState({}, "", `${currentUrl.pathname}#contact`);
-      sentFrame = window.requestAnimationFrame(() => setSent(true));
-    }
+    const handleFormResponse = (event: MessageEvent) => {
+      if (event.source !== formFrameRef.current?.contentWindow || event.data?.type !== "vitasense-form") return;
+
+      if (submissionTimeoutRef.current !== undefined) window.clearTimeout(submissionTimeoutRef.current);
+      setSubmitting(false);
+      setSubmitError(!event.data.success);
+      setSent(Boolean(event.data.success));
+    };
+
+    window.addEventListener("message", handleFormResponse);
 
     const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
     const observer = new IntersectionObserver(
@@ -91,11 +100,21 @@ export default function VitaSenseHome() {
     elements.forEach((element) => observer.observe(element));
     return () => {
       observer.disconnect();
-      if (sentFrame !== undefined) window.cancelAnimationFrame(sentFrame);
+      window.removeEventListener("message", handleFormResponse);
+      if (submissionTimeoutRef.current !== undefined) window.clearTimeout(submissionTimeoutRef.current);
     };
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
+  const handleFormSubmit = () => {
+    setSubmitting(true);
+    setSubmitError(false);
+    if (submissionTimeoutRef.current !== undefined) window.clearTimeout(submissionTimeoutRef.current);
+    submissionTimeoutRef.current = window.setTimeout(() => {
+      setSubmitting(false);
+      setSubmitError(true);
+    }, 20000);
+  };
 
   return (
     <main>
@@ -250,31 +269,31 @@ export default function VitaSenseHome() {
           <p>Tell us what’s been concerning you. Our team will get in touch to discuss the most suitable assessment and appointment options.</p>
           <div className="contact-note"><span aria-hidden="true"><Info size={13} /></span><p>If you have urgent or severe symptoms, contact your doctor or emergency services.</p></div>
         </div>
-        <form className="contact-form" data-reveal action="https://formsubmit.co/info@vita-sense.com" method="POST" acceptCharset="UTF-8">
+        <form className="contact-form" data-reveal action={appointmentEndpoint} method="POST" target="vitasense-form-target" acceptCharset="UTF-8" onSubmit={handleFormSubmit}>
           {sent ? (
             <div className="success-message" role="status">
               <span aria-hidden="true"><Check size={25} /></span>
               <h3>Thank you</h3>
-              <p>Your request has been noted. Connect this form to your preferred email or booking service before launch to receive enquiries.</p>
-              <button type="button" className="text-link dark" onClick={() => setSent(false)}>Send another request</button>
+              <p>Your request has been sent to VitaSense. A confirmation email should arrive shortly, and our team will be in touch.</p>
+              <button type="button" className="text-link dark" onClick={() => { setSent(false); setSubmitError(false); }}>Send another request</button>
             </div>
           ) : (
             <>
-              <input type="hidden" name="_subject" value="New VitaSense appointment request" />
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_next" value="https://vita-sense.com/?sent=1#contact" />
-              <input type="hidden" name="_autoresponse" value="Thank you for contacting VitaSense. We have received your appointment request and a member of our team will review it and contact you as soon as possible. If your symptoms are urgent or severe, please contact your doctor or emergency services. For your privacy, please avoid sending additional sensitive medical information by email." />
-              <label className="honey-field" aria-hidden="true">Leave this field empty<input type="text" name="_honey" tabIndex={-1} autoComplete="off" /></label>
+              <label className="honey-field" aria-hidden="true">Leave this field empty<input type="text" name="website" tabIndex={-1} autoComplete="off" /></label>
               <div className="form-heading"><span>Appointment request</span><small>All fields are required</small></div>
               <label>Full name<input type="text" name="name" autoComplete="name" placeholder="Your name" required /></label>
               <label>Email address<input type="email" name="email" autoComplete="email" placeholder="you@example.com" required /></label>
               <label>I’m interested in<select name="service" defaultValue="" required><option value="" disabled>Select a test</option><option>EEG</option><option>VNG</option><option>Skin Allergy Test</option><option>NCV</option><option>I’m not sure yet</option></select></label>
               <label>How can we help?<textarea name="message" placeholder="Briefly tell us what you’re experiencing" rows={3} required /></label>
-              <button className="button button-primary form-submit" type="submit">Request a call back <ArrowRight aria-hidden="true" size={17} /></button>
-              <small className="privacy-note">Your details are securely forwarded to VitaSense through our form delivery service and used only to respond to this enquiry.</small>
+              <button className="button button-primary form-submit" type="submit" disabled={submitting} aria-busy={submitting}>
+                {submitting ? "Sending…" : "Request a call back"} {!submitting && <ArrowRight aria-hidden="true" size={17} />}
+              </button>
+              {submitError && <p className="form-error" role="alert">We couldn’t send your request. Please try again or email info@vita-sense.com.</p>}
+              <small className="privacy-note">Your details are sent directly to VitaSense through Google Workspace and used only to respond to this enquiry.</small>
             </>
           )}
         </form>
+        <iframe ref={formFrameRef} className="form-response-frame" name="vitasense-form-target" title="Appointment form response" />
       </section>
 
       <footer>

@@ -36,8 +36,9 @@ test("server-renders the VitaSense website", async () => {
   assert.match(html, /Videonystagmography/);
   assert.match(html, /Skin Allergy Test/);
   assert.match(html, /hero-neural-woman\.png/);
-  assert.match(html, /action="https:\/\/formsubmit\.co\/info@vita-sense\.com"/);
-  assert.match(html, /name="_autoresponse"/);
+  assert.match(html, /action="https:\/\/script\.google\.com\/macros\/s\/AKfycbzpvWQiMYgpodilD8IkLhHUPz56SNI39to1UMRiiMyFKzfWqms6UoFaH4gJ97dDjv3saw\/exec"/);
+  assert.match(html, /target="vitasense-form-target"/);
+  assert.match(html, /name="website"/);
   assert.match(html, /id="services"/);
   assert.match(html, /id="approach"/);
   assert.match(html, /id="faq"/);
