@@ -74,7 +74,15 @@ export default function VitaSenseHome() {
 
   useEffect(() => {
     const handleFormResponse = (event: MessageEvent) => {
-      if (event.source !== formFrameRef.current?.contentWindow || event.data?.type !== "vitasense-form") return;
+      const responseHost = (() => {
+        try {
+          return new URL(event.origin).hostname;
+        } catch {
+          return "";
+        }
+      })();
+      const isGoogleScriptResponse = responseHost === "script.google.com" || responseHost.endsWith(".googleusercontent.com");
+      if (!isGoogleScriptResponse || event.data?.type !== "vitasense-form") return;
 
       if (submissionTimeoutRef.current !== undefined) window.clearTimeout(submissionTimeoutRef.current);
       setSubmitting(false);
@@ -113,7 +121,7 @@ export default function VitaSenseHome() {
     submissionTimeoutRef.current = window.setTimeout(() => {
       setSubmitting(false);
       setSubmitError(true);
-    }, 20000);
+    }, 12000);
   };
 
   return (
