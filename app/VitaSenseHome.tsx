@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Activity, ArrowDown, ArrowRight, BrainCircuit, Check, CheckCircle2, Eye, HeartPulse, Info, Plus, ShieldCheck, TestTubeDiagonal } from "lucide-react";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const appointmentEndpoint = "https://script.google.com/macros/s/AKfycbzpvWQiMYgpodilD8IkLhHUPz56SNI39to1UMRiiMyFKzfWqms6UoFaH4gJ97dDjv3saw/exec";
+const appointmentEndpoint = "https://script.google.com/macros/s/AKfycbyBmeKwEsRM_m8ADtKL4uuDICQMXzzS6UV3mseb1wzdjLNNwDzuMRobOba1i6YYMubGtA/exec";
 
 const services = [
   {
