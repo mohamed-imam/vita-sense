@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import Image from "next/image";
+import PhoneInput, { isValidPhoneNumber, type Value } from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import { Activity, ArrowDown, ArrowRight, BrainCircuit, Check, CheckCircle2, Eye, HeartPulse, Info, Plus, ShieldCheck, TestTubeDiagonal } from "lucide-react";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -67,8 +69,12 @@ export default function VitaSenseHome() {
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState<Value>();
+  const [phoneError, setPhoneError] = useState(false);
   const [selectedHeroTest, setSelectedHeroTest] = useState(0);
   const formFrameRef = useRef<HTMLIFrameElement>(null);
+  const messageDetailsRef = useRef<HTMLTextAreaElement>(null);
+  const messagePayloadRef = useRef<HTMLInputElement>(null);
   const submissionTimeoutRef = useRef<number | undefined>(undefined);
   const submissionPendingRef = useRef(false);
   const activeHeroTest = services[selectedHeroTest];
@@ -116,10 +122,19 @@ export default function VitaSenseHome() {
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
-  const handleFormSubmit = () => {
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    if (!phoneNumber || !isValidPhoneNumber(phoneNumber)) {
+      event.preventDefault();
+      setPhoneError(true);
+      return;
+    }
+    if (messagePayloadRef.current) {
+      messagePayloadRef.current.value = `Mobile number: ${phoneNumber}\n\nMessage:\n${messageDetailsRef.current?.value ?? ""}`;
+    }
     submissionPendingRef.current = true;
     setSubmitting(true);
     setSubmitError(false);
+    setPhoneError(false);
     if (submissionTimeoutRef.current !== undefined) window.clearTimeout(submissionTimeoutRef.current);
     submissionTimeoutRef.current = window.setTimeout(() => {
       submissionPendingRef.current = false;
@@ -303,8 +318,24 @@ export default function VitaSenseHome() {
               <div className="form-heading"><span>Appointment request</span><small>All fields are required</small></div>
               <label>Full name<input type="text" name="name" autoComplete="name" placeholder="Your name" required /></label>
               <label>Email address<input type="email" name="email" autoComplete="email" placeholder="you@example.com" required /></label>
+              <label className="phone-field">Mobile number
+                <PhoneInput
+                  defaultCountry="US"
+                  international
+                  withCountryCallingCode
+                  countryCallingCodeEditable={false}
+                  value={phoneNumber}
+                  onChange={(value) => { setPhoneNumber(value); if (value) setPhoneError(false); }}
+                  name="phone"
+                  autoComplete="tel"
+                  aria-label="Mobile number"
+                  required
+                />
+                {phoneError && <span className="field-error" role="alert">Enter a valid mobile number.</span>}
+              </label>
               <label>I’m interested in<select name="service" defaultValue="" required><option value="" disabled>Select a test</option><option>EEG</option><option>VNG</option><option>Skin Allergy Test</option><option>NCV</option><option>I’m not sure yet</option></select></label>
-              <label>How can we help?<textarea name="message" placeholder="Briefly tell us what you’re experiencing" rows={3} required /></label>
+              <label>How can we help?<textarea ref={messageDetailsRef} name="details" placeholder="Briefly tell us what you’re experiencing" rows={3} required /></label>
+              <input ref={messagePayloadRef} type="hidden" name="message" />
               <button className="button button-primary form-submit" type="submit" disabled={submitting} aria-busy={submitting}>
                 {submitting ? "Sending…" : "Request a call back"} {!submitting && <ArrowRight aria-hidden="true" size={17} />}
               </button>
