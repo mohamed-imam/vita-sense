@@ -76,17 +76,20 @@ app/
 .github/workflows/
   deploy-pages.yml    GitHub Pages build and deployment
 public/
-  vitasense-logo.jpg  VitaSense logo
+  vitasense-logo.png  Transparent full Vitasense logo
+  vitasense-mark.png  Compact Vitasense mark for browser icons
   og.png              Social-sharing preview
 ```
 
 ## Appointment form
 
-The form currently provides the complete front-end experience but does not send enquiries to an external service. Before launch, connect it to the business's preferred email, CRM, or booking provider.
+The appointment form posts to FormSubmit for delivery to `info@vita-sense.com` and sends a confirmation response to the visitor. The recipient address must approve FormSubmit's one-time activation email before live enquiries are delivered.
+
+FormSubmit currently performs its own human-verification step. Moving that check into the site requires a server-side endpoint for CAPTCHA token validation and email delivery; GitHub Pages alone cannot securely hold the required secrets.
 
 ## Brand assets
 
-The original supplied logo is retained in the project root for reference. The website-ready copy is stored at `public/vitasense-logo.jpg`.
+The supplied logo is retained at `public/vitasense-logo.jpg`. Website-ready transparent versions are stored at `public/vitasense-logo.png` and `public/vitasense-mark.png`.
 
 ## Deployment
 

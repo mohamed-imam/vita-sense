@@ -17,16 +17,17 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(isGitHubPages ? "https://mohamed-imam.github.io" : "https://vita-sense.com"),
-  title: "VitaSense | Nerve, Allergy & Circulation Testing",
-  description: "Professional nerve, allergy and circulation testing, delivered with precision, trust and care.",
+  title: "VitaSense | EEG, VNG, Allergy & NCV Testing",
+  description: "Professional EEG, VNG, skin allergy and NCV testing, delivered with precision, trust and care.",
   icons: {
-    icon: `${deploymentBase}/vitasense-logo.jpg`,
-    shortcut: `${deploymentBase}/vitasense-logo.jpg`,
+    icon: `${deploymentBase}/vitasense-mark.png`,
+    shortcut: `${deploymentBase}/vitasense-mark.png`,
+    apple: `${deploymentBase}/vitasense-mark.png`,
   },
   openGraph: {
     title: "VitaSense | Clearer answers. Confident next steps.",
-    description: "Professional nerve, allergy and circulation testing, delivered with care.",
-    images: [{ url: `${deploymentBase}/og.png`, width: 1200, height: 630, alt: "VitaSense testing services" }],
+    description: "Professional EEG, VNG, skin allergy and NCV testing, delivered with care.",
+    images: [{ url: `${deploymentBase}/og.png`, width: 1730, height: 909, alt: "Vitasense testing services" }],
   },
   twitter: { card: "summary_large_image", images: [`${deploymentBase}/og.png`] },
 };

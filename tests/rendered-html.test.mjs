@@ -29,14 +29,15 @@ test("server-renders the VitaSense website", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>VitaSense \| Nerve, Allergy &amp; Circulation Testing<\/title>/i);
+  assert.match(html, /<title>VitaSense \| EEG, VNG, Allergy &amp; NCV Testing<\/title>/i);
   assert.match(html, /Clearer answers\./);
-  assert.match(html, /Nerve testing/);
-  assert.match(html, /Allergy testing/);
-  assert.match(html, /Circulation testing/);
-  assert.match(html, /service-icons\/nerve-test\.svg/);
-  assert.match(html, /service-icons\/allergy-test\.svg/);
-  assert.match(html, /service-icons\/circulation-test\.svg/);
+  assert.match(html, /Nerve Conduction Velocity/);
+  assert.match(html, /Electroencephalogram/);
+  assert.match(html, /Videonystagmography/);
+  assert.match(html, /Skin Allergy Test/);
+  assert.match(html, /hero-neural-woman\.png/);
+  assert.match(html, /action="https:\/\/formsubmit\.co\/info@vita-sense\.com"/);
+  assert.match(html, /name="_autoresponse"/);
   assert.match(html, /id="services"/);
   assert.match(html, /id="approach"/);
   assert.match(html, /id="faq"/);
@@ -54,19 +55,18 @@ test("keeps the finished site free of starter scaffolding and forced scrolling",
   ]);
 
   assert.match(page, /<VitaSenseHome \/>/);
-  assert.match(layout, /VitaSense \| Nerve, Allergy & Circulation Testing/);
-  assert.match(home, /logo-pulse-one/);
+  assert.match(layout, /VitaSense \| EEG, VNG, Allergy & NCV Testing/);
+  assert.match(home, /hero-neural-woman\.png/);
   assert.doesNotMatch(css, /scroll-snap/);
   assert.doesNotMatch(home, /addEventListener\("wheel"|scrollIntoView|handleWheel/);
-  assert.match(css, /@keyframes logo-pulse-wave/);
+  assert.match(css, /prefers-reduced-motion/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 
   await Promise.all([
-    access(new URL("../public/vitasense-logo.jpg", import.meta.url)),
+    access(new URL("../public/vitasense-logo.png", import.meta.url)),
+    access(new URL("../public/vitasense-mark.png", import.meta.url)),
+    access(new URL("../public/hero-neural-woman.png", import.meta.url)),
     access(new URL("../public/og.png", import.meta.url)),
-    access(new URL("../public/service-icons/nerve-test.svg", import.meta.url)),
-    access(new URL("../public/service-icons/allergy-test.svg", import.meta.url)),
-    access(new URL("../public/service-icons/circulation-test.svg", import.meta.url)),
   ]);
   await assert.rejects(
     access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)),

@@ -1,35 +1,47 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { ArrowDown, ArrowRight, Check, CheckCircle2, HeartPulse, Info, Plus, ShieldCheck } from "lucide-react";
+import { Activity, ArrowDown, ArrowRight, BrainCircuit, Check, CheckCircle2, Eye, HeartPulse, Info, Plus, ShieldCheck, TestTubeDiagonal } from "lucide-react";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const services = [
   {
     number: "01",
-    icon: "/service-icons/nerve-test.svg",
-    iconAlt: "Neuron symbol for nerve testing",
-    title: "Nerve testing",
-    text: "A focused assessment to help understand changes in sensation, tingling, numbness or discomfort.",
-    points: ["Clear, guided process", "Results explained simply"],
+    icon: BrainCircuit,
+    title: "EEG",
+    shortTitle: "EEG",
+    subtitle: "Electroencephalogram",
+    text: "Records the electrical activity of your brain.",
+    points: ["Seizure investigation", "Unexplained loss of consciousness"],
   },
   {
     number: "02",
-    icon: "/service-icons/allergy-test.svg",
-    iconAlt: "Allergen spore symbol for allergy testing",
-    title: "Allergy testing",
-    text: "Practical testing designed to identify possible sensitivities and give you clearer next steps.",
-    points: ["Considered assessment", "Personalised guidance"],
+    icon: Eye,
+    title: "VNG",
+    shortTitle: "VNG",
+    subtitle: "Videonystagmography",
+    text: "Records eye movements to help evaluate balance function.",
+    points: ["Dizziness assessment", "Balance function testing"],
   },
   {
     number: "03",
-    icon: "/service-icons/circulation-test.svg",
-    iconAlt: "Blood drop and circulation symbol for circulation testing",
-    title: "Circulation testing",
-    text: "A non-invasive check to assess blood flow and support a better understanding of your vascular health.",
-    points: ["Comfort-first testing", "Easy-to-follow findings"],
+    icon: TestTubeDiagonal,
+    title: "Skin Allergy Test",
+    shortTitle: "Allergy",
+    subtitle: "Allergy testing",
+    text: "Helps identify substances that may trigger allergic reactions.",
+    points: ["Targeted allergen screening", "Clear follow-up guidance"],
+  },
+  {
+    number: "04",
+    icon: Activity,
+    title: "NCV",
+    shortTitle: "NCV",
+    subtitle: "Nerve Conduction Velocity",
+    text: "Measures how quickly electrical signals travel through your nerves.",
+    points: ["Numbness or tingling", "Weakness assessment"],
   },
 ] as const;
 
@@ -52,8 +64,17 @@ export default function VitaSenseHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
   const [sent, setSent] = useState(false);
+  const [selectedHeroTest, setSelectedHeroTest] = useState(0);
+  const activeHeroTest = services[selectedHeroTest];
 
   useEffect(() => {
+    const currentUrl = new URL(window.location.href);
+    let sentFrame: number | undefined;
+    if (currentUrl.searchParams.get("sent") === "1") {
+      window.history.replaceState({}, "", `${currentUrl.pathname}#contact`);
+      sentFrame = window.requestAnimationFrame(() => setSent(true));
+    }
+
     const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
     const observer = new IntersectionObserver(
       (entries) => {
@@ -68,22 +89,19 @@ export default function VitaSenseHome() {
     );
 
     elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (sentFrame !== undefined) window.cancelAnimationFrame(sentFrame);
+    };
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
-
-  const submitRequest = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setSent(true);
-  };
 
   return (
     <main>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="VitaSense home" onClick={closeMenu}>
-          <span className="brand-mark" aria-hidden="true"><Image src={`${basePath}/vitasense-logo.jpg`} width={1254} height={1254} alt="" priority /></span>
-          <span className="brand-name">Vita<span>Sense</span></span>
+          <Image className="brand-logo" src={`${basePath}/vitasense-logo.png`} width={2172} height={724} alt="Vitasense" priority />
         </a>
         <button
           className="menu-button"
@@ -108,7 +126,7 @@ export default function VitaSenseHome() {
         <div className="hero-copy hero-enter">
           <div className="eyebrow"><span /> Precision-led health testing</div>
           <h1>Clearer answers.<br /><em>Confident next steps.</em></h1>
-          <p className="hero-lead">Professional nerve, allergy and circulation testing, delivered with care and explained without the clinical jargon.</p>
+          <p className="hero-lead">Professional EEG, VNG, skin allergy and NCV testing, delivered with care and explained without the clinical jargon.</p>
           <div className="hero-actions">
             <a className="button button-primary" href="#contact">Request an appointment <ArrowRight aria-hidden="true" size={17} /></a>
             <a className="text-link" href="#services">Explore our tests <ArrowDown className="down-arrow" aria-hidden="true" size={17} /></a>
@@ -120,18 +138,33 @@ export default function VitaSenseHome() {
           </div>
         </div>
 
-        <div className="hero-visual hero-visual-enter" aria-label="VitaSense — Precision. Trust. Care.">
-          <div className="orbit orbit-one" />
-          <div className="orbit orbit-two" />
-          <div className="logo-pulse logo-pulse-one" />
-          <div className="logo-pulse logo-pulse-two" />
-          <div className="logo-stage">
-            <Image src={`${basePath}/vitasense-logo.jpg`} width={1254} height={1254} alt="VitaSense — Precision. Trust. Care." priority />
+        <div className="hero-visual hero-visual-enter" aria-label="Interactive map of VitaSense diagnostic tests">
+          <div className="hero-map-intro"><span aria-hidden="true" /> Select a signal</div>
+          <Image className="hero-woman" src={`${basePath}/hero-neural-woman.png`} width={1216} height={1293} alt="Woman in profile illustrated with flowing diagnostic signal lines" priority />
+          <div className="test-hotspots" role="tablist" aria-label="Choose a diagnostic test">
+            {services.map((service, index) => (
+              <button
+                className={`test-hotspot hotspot-${index + 1}${selectedHeroTest === index ? " is-active" : ""}`}
+                type="button"
+                role="tab"
+                aria-selected={selectedHeroTest === index}
+                aria-controls="hero-test-detail"
+                key={service.title}
+                onClick={() => setSelectedHeroTest(index)}
+              >
+                <span className="hotspot-number">{service.number}</span>
+                <span className="hotspot-label">{service.shortTitle}</span>
+              </button>
+            ))}
           </div>
-          <div className="hero-visual-note">
-            <span className="pulse-dot" />
-            <div><small>Our approach</small><strong>Listen. Test. Explain.</strong></div>
-          </div>
+          <article id="hero-test-detail" className="hero-test-detail" role="tabpanel" aria-live="polite" key={activeHeroTest.title}>
+            <div className="hero-test-heading">
+              <span>{activeHeroTest.number}</span>
+              <div><small>{activeHeroTest.subtitle}</small><strong>{activeHeroTest.title}</strong></div>
+            </div>
+            <p>{activeHeroTest.text}</p>
+            <a href="#services">Explore this test <ArrowRight aria-hidden="true" size={15} /></a>
+          </article>
         </div>
       </section>
 
@@ -146,11 +179,12 @@ export default function VitaSenseHome() {
             <article className="service-card" data-reveal style={{ "--reveal-delay": `${index * 110}ms` } as React.CSSProperties} key={service.title}>
               <div className="service-top">
                 <span className="service-icon">
-                  <Image src={`${basePath}${service.icon}`} width={1200} height={1200} alt={service.iconAlt} />
+                  <service.icon aria-hidden="true" size={34} strokeWidth={1.55} />
                 </span>
                 <span className="service-number">{service.number}</span>
               </div>
               <h3>{service.title}</h3>
+              <small className="service-subtitle">{service.subtitle}</small>
               <p>{service.text}</p>
               <ul>
                 {service.points.map((point) => <li key={point}>{point}</li>)}
@@ -216,7 +250,7 @@ export default function VitaSenseHome() {
           <p>Tell us what’s been concerning you. Our team will get in touch to discuss the most suitable assessment and appointment options.</p>
           <div className="contact-note"><span aria-hidden="true"><Info size={13} /></span><p>If you have urgent or severe symptoms, contact your doctor or emergency services.</p></div>
         </div>
-        <form className="contact-form" data-reveal onSubmit={submitRequest}>
+        <form className="contact-form" data-reveal action="https://formsubmit.co/info@vita-sense.com" method="POST" acceptCharset="UTF-8">
           {sent ? (
             <div className="success-message" role="status">
               <span aria-hidden="true"><Check size={25} /></span>
@@ -226,13 +260,18 @@ export default function VitaSenseHome() {
             </div>
           ) : (
             <>
+              <input type="hidden" name="_subject" value="New VitaSense appointment request" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_next" value="https://vita-sense.com/?sent=1#contact" />
+              <input type="hidden" name="_autoresponse" value="Thank you for contacting VitaSense. We have received your appointment request and a member of our team will review it and contact you as soon as possible. If your symptoms are urgent or severe, please contact your doctor or emergency services. For your privacy, please avoid sending additional sensitive medical information by email." />
+              <label className="honey-field" aria-hidden="true">Leave this field empty<input type="text" name="_honey" tabIndex={-1} autoComplete="off" /></label>
               <div className="form-heading"><span>Appointment request</span><small>All fields are required</small></div>
               <label>Full name<input type="text" name="name" autoComplete="name" placeholder="Your name" required /></label>
               <label>Email address<input type="email" name="email" autoComplete="email" placeholder="you@example.com" required /></label>
-              <label>I’m interested in<select name="service" defaultValue="" required><option value="" disabled>Select a test</option><option>Nerve testing</option><option>Allergy testing</option><option>Circulation testing</option><option>I’m not sure yet</option></select></label>
+              <label>I’m interested in<select name="service" defaultValue="" required><option value="" disabled>Select a test</option><option>EEG</option><option>VNG</option><option>Skin Allergy Test</option><option>NCV</option><option>I’m not sure yet</option></select></label>
               <label>How can we help?<textarea name="message" placeholder="Briefly tell us what you’re experiencing" rows={3} required /></label>
               <button className="button button-primary form-submit" type="submit">Request a call back <ArrowRight aria-hidden="true" size={17} /></button>
-              <small className="privacy-note">Your details will only be used to respond to this enquiry.</small>
+              <small className="privacy-note">Your details are securely forwarded to VitaSense through our form delivery service and used only to respond to this enquiry.</small>
             </>
           )}
         </form>
@@ -240,10 +279,9 @@ export default function VitaSenseHome() {
 
       <footer>
         <a className="brand footer-brand" href="#top" aria-label="VitaSense home">
-          <span className="brand-mark" aria-hidden="true"><Image src={`${basePath}/vitasense-logo.jpg`} width={1254} height={1254} alt="" /></span>
-          <span className="brand-name">Vita<span>Sense</span></span>
+          <Image className="brand-logo" src={`${basePath}/vitasense-logo.png`} width={2172} height={724} alt="Vitasense" />
         </a>
-        <p>Professional nerve, allergy and circulation testing.</p>
+        <p>Professional EEG, VNG, skin allergy and NCV testing.</p>
         <div className="footer-links"><a href="#services">Tests</a><a href="#approach">Our approach</a><a href="#faq">FAQs</a><a href="#contact">Contact</a></div>
         <div className="footer-bottom"><span>© {new Date().getFullYear()} VitaSense. All rights reserved.</span><span>Precision · Trust · Care</span></div>
       </footer>
