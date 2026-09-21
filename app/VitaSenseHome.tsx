@@ -70,6 +70,7 @@ export default function VitaSenseHome() {
   const [selectedHeroTest, setSelectedHeroTest] = useState(0);
   const formFrameRef = useRef<HTMLIFrameElement>(null);
   const submissionTimeoutRef = useRef<number | undefined>(undefined);
+  const submissionPendingRef = useRef(false);
   const activeHeroTest = services[selectedHeroTest];
 
   useEffect(() => {
@@ -85,6 +86,7 @@ export default function VitaSenseHome() {
       if (!isGoogleScriptResponse || event.data?.type !== "vitasense-form") return;
 
       if (submissionTimeoutRef.current !== undefined) window.clearTimeout(submissionTimeoutRef.current);
+      submissionPendingRef.current = false;
       setSubmitting(false);
       setSubmitError(!event.data.success);
       setSent(Boolean(event.data.success));
@@ -115,13 +117,23 @@ export default function VitaSenseHome() {
 
   const closeMenu = () => setMenuOpen(false);
   const handleFormSubmit = () => {
+    submissionPendingRef.current = true;
     setSubmitting(true);
     setSubmitError(false);
     if (submissionTimeoutRef.current !== undefined) window.clearTimeout(submissionTimeoutRef.current);
     submissionTimeoutRef.current = window.setTimeout(() => {
+      submissionPendingRef.current = false;
       setSubmitting(false);
       setSubmitError(true);
     }, 12000);
+  };
+  const handleFormFrameLoad = () => {
+    if (!submissionPendingRef.current) return;
+    submissionPendingRef.current = false;
+    if (submissionTimeoutRef.current !== undefined) window.clearTimeout(submissionTimeoutRef.current);
+    setSubmitting(false);
+    setSubmitError(false);
+    setSent(true);
   };
 
   return (
@@ -301,7 +313,7 @@ export default function VitaSenseHome() {
             </>
           )}
         </form>
-        <iframe ref={formFrameRef} className="form-response-frame" name="vitasense-form-target" title="Appointment form response" />
+        <iframe ref={formFrameRef} className="form-response-frame" name="vitasense-form-target" title="Appointment form response" onLoad={handleFormFrameLoad} />
       </section>
 
       <footer>
