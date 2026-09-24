@@ -30,8 +30,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build static site
-        run: npm run build
+      - name: Lint
+        run: npm run lint
+
+      - name: Build and test static site
+        run: npm test
 
       - name: Prepare GitHub Pages asset paths
         run: |
@@ -40,7 +43,9 @@ jobs:
             rmdir dist/client/vita-sense
           fi
           test -f dist/client/index.html
+          test -f dist/client/connect/index.html
           test -d dist/client/_next
+          grep -q 'href="/vita-sense/connect/"' dist/client/index.html
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6

@@ -1,0 +1,99 @@
+.connect-page { min-height: 100svh; color: #182c3c; background: #f6f8fa; }
+.connect-blue { color: #fff; background: radial-gradient(circle at 50% 12%, #19495a 0, #12364d 32%, #0a1b2e 86%); }
+.connect-shell { width: min(630px, 100%); margin: 0 auto; }
+.connect-blue .connect-shell { padding: 10px 22px 28px; }
+.connect-header { display: flex; align-items: center; justify-content: space-between; min-height: 49px; gap: 16px; }
+.connect-brand { display: inline-flex; align-items: center; width: 135px; padding: 6px 8px; flex: none; background: #fff; border-radius: 10px; }
+.connect-brand img { display: block; width: 100%; height: auto; }
+.connect-back { display: inline-flex; align-items: center; gap: 6px; color: #c2d8dc; font-size: .78rem; font-weight: 590; }
+.connect-back:hover { color: #fff; }
+.connect-back svg { transition: transform .2s ease; }
+.connect-back:hover svg { transform: translateX(-3px); }
+.connect-hero { padding: 8px 0 0; text-align: center; }
+.connect-kicker { color: #91dfda; font-size: .62rem; font-weight: 730; letter-spacing: .17em; }
+.connect-hero h1 { margin: 7px 0 3px; color: #fff; font-size: clamp(2.6rem, 7vw, 3.35rem); font-weight: 690; letter-spacing: -.06em; line-height: 1; }
+.connect-hero p { margin: 0; color: #c7d9dc; font-size: .85rem; }
+.social-strip-connect { margin-top: 13px; }
+.social-strip-connect .social-strip-list { display: flex; justify-content: center; gap: 10px; }
+.social-strip-connect .social-link { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; color: #183949; background: rgba(255,255,255,.96); box-shadow: 0 5px 18px rgba(0,0,0,.1); transition: transform .2s ease, background .2s ease; }
+.social-strip-connect .social-link:hover { transform: translateY(-3px); background: #fff; }
+.social-strip-connect .social-link:active { transform: scale(.94); }
+.social-link-icon { display: grid; place-items: center; }
+.social-link-icon svg { width: 21px; height: 21px; }
+.social-link-whatsapp .social-link-icon, .connect-icon-whatsapp { color: #168b66; }
+.social-link-instagram .social-link-icon, .connect-icon-instagram { color: #bb4777; }
+.social-link-facebook .social-link-icon, .connect-icon-facebook { color: #2367a9; }
+.social-link-linkedin .social-link-icon, .connect-icon-linkedin { color: #176b9b; }
+.social-link-email .social-link-icon, .connect-icon-email { color: #0e6670; }
+.connect-lower { position: relative; margin-top: -21px; padding: 0 14px 18px; }
+.connect-card { padding: 17px 18px 18px; background: #fbfcfd; border: 1px solid #e7edef; border-radius: 25px; box-shadow: 0 22px 48px rgba(9,29,45,.11); }
+.connect-group + .connect-group { margin-top: 16px; }
+.connect-group-heading { display: flex; align-items: baseline; gap: 9px; margin: 0 0 7px 3px; }
+.connect-group-heading > span { color: #13848a; font-size: .64rem; font-weight: 750; }
+.connect-group-heading h2 { margin: 0; color: #1b3040; font-size: 1rem; font-weight: 680; letter-spacing: -.025em; }
+.connect-row { display: flex; align-items: center; gap: 12px; min-height: 57px; padding: 8px 12px; color: #1d3442; background: #fff; border: 1px solid #e4e9eb; border-radius: 14px; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.connect-row + .connect-row { margin-top: 6px; }
+.connect-row:hover { transform: translateY(-2px); border-color: #a5d5d4; box-shadow: 0 9px 22px rgba(9,29,45,.08); }
+.connect-row:active { transform: scale(.99); }
+.connect-row-icon { width: 37px; height: 37px; display: grid; place-items: center; flex: none; color: #087e84; background: #e7f5f3; border-radius: 10px; }
+.connect-row-icon svg { width: 20px; height: 20px; }
+.connect-row-copy { min-width: 0; display: grid; gap: 1px; }
+.connect-row-copy strong { font-size: .84rem; font-weight: 650; line-height: 1.2; }
+.connect-row-copy small { color: #6b7c85; font-size: .68rem; line-height: 1.2; }
+.connect-row-arrow { margin-left: auto; flex: none; color: #16848b; }
+.connect-row-accent { color: #fff; background: #0e6670; border-color: #0e6670; }
+.connect-row-accent:hover { border-color: #0e6670; }
+.connect-row-accent .connect-row-icon { color: #0e6670; background: #e9f8f5; }
+.connect-row-accent .connect-row-copy small { color: #cde8e8; }
+.connect-row-accent .connect-row-arrow { color: #fff; }
+.connect-icon-instagram { background: #f9eaf1; }
+.connect-icon-facebook { background: #eaf2fb; }
+.connect-icon-linkedin { background: #e8f2f8; }
+.connect-icon-whatsapp { background: #e4f5ed; }
+.connect-icon-email { background: #e8f3f5; }
+.connect-footer { padding: 14px 0 0; color: #81919a; background: transparent; font-size: .67rem; text-align: center; }
+@media (max-width: 560px) {
+  .connect-blue .connect-shell { padding: 7px 18px 22px; }
+  .connect-header { min-height: 39px; }
+  .connect-brand { width: 116px; padding: 4px 6px; }
+  .connect-hero { padding-top: 3px; }
+  .connect-hero h1 { margin: 5px 0 3px; font-size: 2.5rem; }
+  .connect-hero p { font-size: .75rem; }
+  .social-strip-connect { margin-top: 10px; }
+  .social-strip-connect .social-link { width: 38px; height: 38px; }
+  .connect-lower { margin-top: -18px; padding: 0 10px; }
+  .connect-card { padding: 13px 13px 14px; border-radius: 22px; }
+  .connect-group + .connect-group { margin-top: 10px; }
+  .connect-group-heading { margin-bottom: 5px; }
+  .connect-group-heading h2 { font-size: .94rem; }
+  .connect-row { min-height: 44px; padding: 5px 9px; gap: 9px; border-radius: 11px; }
+  .connect-row + .connect-row { margin-top: 4px; }
+  .connect-row-icon { width: 33px; height: 33px; border-radius: 8px; }
+  .connect-row-icon svg { width: 18px; height: 18px; }
+  .connect-row-copy strong { font-size: .78rem; }
+  .connect-row-copy small { font-size: .61rem; }
+  .connect-footer { display: none; }
+}
+@media (max-height: 620px) and (max-width: 560px) {
+  .connect-blue .connect-shell { padding-top: 5px; padding-bottom: 9px; }
+  .connect-header { min-height: 31px; }
+  .connect-brand { width: 106px; }
+  .connect-hero { padding-top: 0; }
+  .connect-hero h1 { margin: 2px 0; font-size: 2rem; }
+  .connect-hero p { font-size: .68rem; }
+  .social-strip-connect { margin-top: 4px; }
+  .social-strip-connect .social-link { width: 34px; height: 34px; }
+  .social-link-icon svg { width: 19px; height: 19px; }
+  .connect-lower { margin-top: -8px; padding-bottom: 0; }
+  .connect-card { padding: 7px 10px; }
+  .connect-group + .connect-group { margin-top: 4px; }
+  .connect-group-heading { margin-bottom: 3px; }
+  .connect-group-heading h2 { font-size: .87rem; }
+  .connect-row { min-height: 42px; padding: 3px 7px; }
+  .connect-row + .connect-row { margin-top: 3px; }
+  .connect-row-icon { width: 31px; height: 31px; }
+  .connect-row-copy small { font-size: .58rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .connect-page *, .connect-page *::before, .connect-page *::after { transition-duration: .01ms !important; }
+}

@@ -5,7 +5,7 @@ const isGitHubPages = process.env.GITHUB_ACTIONS === "true";
 const nextConfig: NextConfig = {
   output: "export",
   assetPrefix: isGitHubPages ? "/vita-sense" : "",
-  trailingSlash: true,
+  trailingSlash: false,
   env: {
     NEXT_PUBLIC_BASE_PATH: isGitHubPages ? "/vita-sense" : "",
   },

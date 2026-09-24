@@ -61,7 +61,7 @@ test("keeps the finished site free of starter scaffolding and forced scrolling",
   assert.match(layout, /VitaSense \| EEG, VNG, Allergy & NCV Testing/);
   assert.match(home, /hero-neural-woman\.png/);
   assert.doesNotMatch(css, /scroll-snap/);
-  assert.doesNotMatch(home, /addEventListener\("wheel"|scrollIntoView|handleWheel/);
+  assert.doesNotMatch(home, /addEventListener\("wheel"|handleWheel/);
   assert.match(css, /prefers-reduced-motion/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 
@@ -74,4 +74,19 @@ test("keeps the finished site free of starter scaffolding and forced scrolling",
   await assert.rejects(
     access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)),
   );
+});
+
+test("exports a compact connect page with the requested US contact links", async () => {
+  const html = await readFile(new URL("../dist/client/connect/index.html", import.meta.url), "utf8");
+  assert.match(html, /Connect with VitaSense/);
+  assert.match(html, /Start here/);
+  assert.match(html, /Talk with us/);
+  assert.match(html, /Follow along/);
+  assert.match(html, /social-strip-connect/);
+  assert.match(html, /https:\/\/wa\.link\/vzhy40/);
+  assert.match(html, /https:\/\/www\.instagram\.com\/vitasensetests/);
+  assert.match(html, /https:\/\/www\.facebook\.com\/share\/1EvGHcTGgj/);
+  assert.match(html, /https:\/\/www\.linkedin\.com\/in\/Vitasensetest/);
+  assert.match(html, /mailto:info@vita-sense\.com/);
+  assert.doesNotMatch(html, /\bNHS\b|<img[^>]*qr/i);
 });

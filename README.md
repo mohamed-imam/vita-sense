@@ -85,7 +85,7 @@ public/
 
 The appointment form posts to a Google Apps Script web app owned by the VitaSense Google Workspace account. The script delivers each request to `info@vita-sense.com` and sends a confirmation response to the visitor without navigating away from the website.
 
-The form uses a hidden honeypot field for basic spam filtering. The Apps Script deployment must remain available to “Anyone” and execute as the Workspace account that is authorised to send from `info@vita-sense.com`.
+The form uses a hidden honeypot field for basic spam filtering. The Apps Script deployment must remain available to “Anyone” and execute as the Workspace account that is authorized to send from `info@vita-sense.com`.
 
 ## Brand assets
 
