@@ -58,16 +58,12 @@
 .appointment-dialog-inner { max-width: 680px; margin: 0 auto; padding: 0 24px 30px; }
 .appointment-dialog-topline { position: sticky; z-index: 5; top: 0; min-height: 78px; display: flex; align-items: center; justify-content: space-between; color: #66717a; background: #fbfbfd; font-size: .76rem; font-weight: 600; }
 .appointment-dialog .detail-close { position: static; margin-right: 0; }
-.appointment-dialog-intro { margin: 4px 0 24px; text-align: center; }
-.appointment-dialog-intro h2 { margin: 0; color: #1b3040; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -.055em; }
-.appointment-dialog-intro p { margin: 7px 0 0; color: #65737d; font-size: .9rem; }
 .appointment-dialog .contact-form { min-height: 0; box-shadow: 0 18px 48px rgba(9,29,45,.1); }
 @media (max-width: 760px) {
   .appointment-dialog { inset: 0; }
   .appointment-dialog-inner { padding: 0 18px 24px; }
   .appointment-dialog-topline { min-height: 64px; }
   .appointment-dialog .detail-close { width: 42px; height: 42px; }
-  .appointment-dialog-intro { margin-bottom: 18px; }
 }
 @media (max-width: 560px) {
   .connect-page { display: flex; flex-direction: column; }
@@ -93,8 +89,18 @@
   .connect-row-copy small { font-size: .65rem; }
   .connect-footer { display: none; }
   .appointment-dialog-inner { padding: 0 12px 20px; }
-  .appointment-dialog-intro p { font-size: .8rem; }
   .appointment-dialog .contact-form { padding: 22px 18px; }
+  .appointment-dialog .contact-form input, .appointment-dialog .contact-form select, .appointment-dialog .contact-form textarea { font-size: 16px; }
+}
+@media (max-height: 820px) and (max-width: 560px) {
+  .connect-row { min-height: clamp(44px, calc(8svh - 14px), 52px); }
+  .connect-group + .connect-group { margin-top: clamp(10px, 1.5svh, 16px); }
+  .appointment-dialog .contact-form { padding-top: 18px; padding-bottom: 18px; }
+  .appointment-dialog .form-heading { margin-bottom: 18px; }
+  .appointment-dialog .contact-form label { margin-bottom: 11px; }
+  .appointment-dialog .contact-form input, .appointment-dialog .contact-form select, .appointment-dialog .contact-form textarea { padding: 10px 12px; }
+  .appointment-dialog .phone-field .PhoneInputInput { padding: 10px 0; }
+  .appointment-dialog .privacy-note { margin-top: 9px; }
 }
 @media (max-height: 750px) and (max-width: 560px) {
   .connect-blue .connect-shell { padding-top: 6px; padding-bottom: 16px; }
@@ -107,6 +113,12 @@
   .connect-group + .connect-group { margin-top: 10px; }
   .connect-row { min-height: 44px; padding-top: 5px; padding-bottom: 5px; }
   .connect-row + .connect-row { margin-top: 4px; }
+}
+@media (max-height: 700px) and (max-width: 560px) {
+  .appointment-dialog-inner { padding-bottom: 8px; }
+  .appointment-dialog-topline { min-height: 56px; }
+  .appointment-dialog .contact-form { padding-top: 14px; padding-bottom: 14px; }
+  .appointment-dialog .form-heading { margin-bottom: 15px; }
 }
 @media (max-height: 620px) and (max-width: 560px) {
   .connect-blue .connect-shell { padding-top: 4px; padding-bottom: 10px; }

@@ -57,8 +57,7 @@ export default function AppointmentRequest() {
       <div className={`service-detail-backdrop${open ? " is-open" : ""}`} aria-hidden="true" onClick={() => setOpen(false)} />
       <section ref={panelRef} id="connect-appointment-dialog" className={`service-detail appointment-dialog${open ? " is-open" : ""}`} style={{ "--detail-origin-x": origin.x, "--detail-origin-y": origin.y } as CSSProperties} role="dialog" aria-modal={open} aria-label="Request an appointment" aria-hidden={!open} inert={!open}>
         <div className="appointment-dialog-inner">
-          <div className="appointment-dialog-topline"><span>Request an appointment</span><button ref={closeRef} type="button" className="detail-close" aria-label="Close appointment request" onClick={() => setOpen(false)}><X size={22} strokeWidth={1.7} /></button></div>
-          <div className="appointment-dialog-intro"><h2>How can we help?</h2><p>Tell us a little about what you need, and we’ll be in touch.</p></div>
+          <div className="appointment-dialog-topline"><span>VitaSense / Appointments</span><button ref={closeRef} type="button" className="detail-close" aria-label="Close appointment request" onClick={() => setOpen(false)}><X size={22} strokeWidth={1.7} /></button></div>
           <AppointmentForm />
         </div>
       </section>
