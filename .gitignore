@@ -39,5 +39,6 @@ yarn-error.log*
 /.wrangler/
 /outputs/
 /work/
+/graphify-out/
 /.openai/
 /02a341d7-0256-490b-b721-a7044f245e65.jpg
