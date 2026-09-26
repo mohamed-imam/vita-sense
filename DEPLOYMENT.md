@@ -3,7 +3,7 @@
 ## Cloudflare Pages project
 
 1. In Cloudflare, create a **Pages** project using **Connect to Git** and authorize the GitHub repository `mohamed-imam/vita-sense`.
-2. Choose production branch `main`, framework preset **None**, build command `npm run build`, build output directory `dist/client`, and Node.js 22 or newer. No environment variables or server functions are required for this static export.
+2. Choose production branch `main`, framework preset **None**, build command `npm run build`, and build output directory `dist/client`. Cloudflare reads `.node-version` to use the same Node.js version as the successful GitHub build. No environment variables or server functions are required for this static export.
 3. Deploy and review the generated `*.pages.dev` URL on desktop and mobile. Check `/`, `/connect/`, images, navigation, metadata, and 404 behavior. The site should load with root-based asset URLs.
 4. Test an appointment request end to end with VitaSense's own address: the form should show success only after the Google Apps Script responds, and both the clinic and requester should receive the expected email. Also confirm a failed request shows an error. Avoid putting real patient details in test submissions.
 
