@@ -53,46 +53,60 @@
 .connect-icon-email { background: #e8f3f5; }
 .connect-footer { padding: 14px 0 0; color: #81919a; background: transparent; font-size: .67rem; text-align: center; }
 @media (max-width: 560px) {
-  .connect-blue .connect-shell { padding: 7px 18px 22px; }
-  .connect-header { min-height: 39px; }
+  .connect-page { display: flex; flex-direction: column; }
+  .connect-blue { flex: none; }
+  .connect-blue .connect-shell { padding: clamp(8px, 1.5svh, 14px) 18px clamp(22px, 3.5svh, 32px); }
+  .connect-header { min-height: 42px; }
   .connect-brand { width: 116px; padding: 4px 6px; }
-  .connect-hero { padding-top: 3px; }
-  .connect-hero h1 { margin: 5px 0 3px; font-size: 2.5rem; }
-  .connect-hero p { font-size: .75rem; }
-  .social-strip-connect { margin-top: 10px; }
-  .social-strip-connect .social-link { width: 38px; height: 38px; }
-  .connect-lower { margin-top: -18px; padding: 0 10px; }
-  .connect-card { padding: 13px 13px 14px; border-radius: 22px; }
-  .connect-group + .connect-group { margin-top: 10px; }
-  .connect-group-heading { margin-bottom: 5px; }
-  .connect-group-heading h2 { font-size: .94rem; }
-  .connect-row { min-height: 44px; padding: 5px 9px; gap: 9px; border-radius: 11px; }
-  .connect-row + .connect-row { margin-top: 4px; }
-  .connect-row-icon { width: 33px; height: 33px; border-radius: 8px; }
+  .connect-hero { padding-top: clamp(5px, 1svh, 10px); }
+  .connect-hero h1 { margin: 6px 0 4px; font-size: 2.5rem; }
+  .connect-hero p { font-size: .78rem; }
+  .social-strip-connect { margin-top: clamp(10px, 1.8svh, 16px); }
+  .social-strip-connect .social-link { width: 40px; height: 40px; }
+  .connect-lower { flex: 1; display: flex; flex-direction: column; margin-top: -18px; padding: 0 10px 12px; }
+  .connect-card { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: clamp(14px, 2svh, 20px) 14px; border-radius: 22px; }
+  .connect-group + .connect-group { margin-top: clamp(12px, 2svh, 20px); }
+  .connect-group-heading { margin-bottom: clamp(6px, 1svh, 9px); }
+  .connect-group-heading h2 { font-size: .96rem; }
+  .connect-row { min-height: clamp(44px, calc(10svh - 20px), 58px); padding: 6px 10px; gap: 10px; border-radius: 12px; }
+  .connect-row + .connect-row { margin-top: clamp(5px, .9svh, 8px); }
+  .connect-row-icon { width: 34px; height: 34px; border-radius: 9px; }
   .connect-row-icon svg { width: 18px; height: 18px; }
-  .connect-row-copy strong { font-size: .78rem; }
-  .connect-row-copy small { font-size: .61rem; }
+  .connect-row-copy strong { font-size: .82rem; }
+  .connect-row-copy small { font-size: .65rem; }
   .connect-footer { display: none; }
 }
+@media (max-height: 750px) and (max-width: 560px) {
+  .connect-blue .connect-shell { padding-top: 6px; padding-bottom: 16px; }
+  .connect-header { min-height: 38px; }
+  .connect-hero { padding-top: 2px; }
+  .connect-hero h1 { margin: 4px 0 2px; font-size: 2.3rem; }
+  .social-strip-connect { margin-top: 8px; }
+  .social-strip-connect .social-link { width: 38px; height: 38px; }
+  .connect-card { padding-top: 12px; padding-bottom: 12px; }
+  .connect-group + .connect-group { margin-top: 10px; }
+  .connect-row { min-height: 44px; padding-top: 5px; padding-bottom: 5px; }
+  .connect-row + .connect-row { margin-top: 4px; }
+}
 @media (max-height: 620px) and (max-width: 560px) {
-  .connect-blue .connect-shell { padding-top: 5px; padding-bottom: 9px; }
-  .connect-header { min-height: 31px; }
-  .connect-brand { width: 106px; }
+  .connect-blue .connect-shell { padding-top: 4px; padding-bottom: 10px; }
+  .connect-header { min-height: 32px; }
+  .connect-brand { width: 110px; }
   .connect-hero { padding-top: 0; }
   .connect-hero h1 { margin: 2px 0; font-size: 2rem; }
-  .connect-hero p { font-size: .68rem; }
-  .social-strip-connect { margin-top: 4px; }
+  .connect-hero p { font-size: .72rem; }
+  .social-strip-connect { margin-top: 5px; }
   .social-strip-connect .social-link { width: 34px; height: 34px; }
   .social-link-icon svg { width: 19px; height: 19px; }
-  .connect-lower { margin-top: -8px; padding-bottom: 0; }
-  .connect-card { padding: 7px 10px; }
+  .connect-lower { margin-top: -10px; padding-bottom: 6px; }
+  .connect-card { padding: 8px 12px; }
   .connect-group + .connect-group { margin-top: 4px; }
-  .connect-group-heading { margin-bottom: 3px; }
-  .connect-group-heading h2 { font-size: .87rem; }
-  .connect-row { min-height: 42px; padding: 3px 7px; }
+  .connect-group-heading { margin-bottom: 2px; }
+  .connect-group-heading h2 { font-size: .86rem; }
+  .connect-row { min-height: 42px; padding: 4px 8px; }
   .connect-row + .connect-row { margin-top: 3px; }
   .connect-row-icon { width: 31px; height: 31px; }
-  .connect-row-copy small { font-size: .58rem; }
+  .connect-row-copy small { font-size: .62rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .connect-page *, .connect-page *::before, .connect-page *::after { transition-duration: .01ms !important; }
