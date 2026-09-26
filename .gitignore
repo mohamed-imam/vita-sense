@@ -40,6 +40,7 @@ yarn-error.log*
 /outputs/
 /work/
 /graphify-out/
+*.tsbuildinfo
 # local Graphify agent setup and source asset archive
 /AGENTS.md
 /.codex/hooks.json

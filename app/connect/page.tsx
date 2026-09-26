@@ -7,7 +7,8 @@ import AppointmentRequest from "./AppointmentRequest";
 import "./connect.css";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const siteUrl = "https://mohamed-imam.github.io/vita-sense/connect/";
+const siteBase = process.env.GITHUB_ACTIONS === "true" ? "https://mohamed-imam.github.io/vita-sense" : "https://vita-sense.com";
+const siteUrl = `${siteBase}/connect/`;
 
 export const dynamic = "force-static";
 
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
     title: "Connect with VitaSense",
     description: "Questions about diagnostic testing? Reach VitaSense or request an appointment.",
     url: siteUrl,
-    images: [{ url: "https://mohamed-imam.github.io/vita-sense/og.png", width: 1730, height: 909, alt: "VitaSense diagnostic testing" }],
+    images: [{ url: `${siteBase}/og.png`, width: 1730, height: 909, alt: "VitaSense diagnostic testing" }],
   },
 };
 

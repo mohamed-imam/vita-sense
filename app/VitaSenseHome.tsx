@@ -18,7 +18,7 @@ const services = [
     subtitle: "Electroencephalogram",
     text: "Records the electrical activity of your brain.",
     points: ["Seizure investigation", "Unexplained loss of consciousness"],
-    image: "test-eeg.png",
+    image: "test-eeg.webp",
     imageAlt: "Clinician placing EEG electrodes on a patient's scalp",
     tagline: "A closer look at your brain’s electrical activity.",
     overview: "An EEG records electrical activity from the brain using small electrodes placed on the scalp. It can help a clinician investigate seizures and other concerns about brain activity.",
@@ -37,7 +37,7 @@ const services = [
     subtitle: "Videonystagmography",
     text: "Records eye movements to help evaluate balance function.",
     points: ["Dizziness assessment", "Balance function testing"],
-    image: "test-vng.png",
+    image: "test-vng.webp",
     imageAlt: "Patient wearing video goggles during a balance assessment",
     tagline: "Understanding dizziness and balance.",
     overview: "VNG uses camera-equipped goggles to record eye movements. The patterns can give clinicians information about how the balance system is working.",
@@ -56,7 +56,7 @@ const services = [
     subtitle: "Allergy testing",
     text: "Helps identify substances that may trigger allergic reactions.",
     points: ["Targeted allergen screening", "Clear follow-up guidance"],
-    image: "test-allergy.png",
+    image: "test-allergy.webp",
     imageAlt: "Clinician applying allergy test droplets to a patient's forearm",
     tagline: "Make sense of possible triggers.",
     overview: "A skin prick test checks for a reaction to selected allergens. Small drops are placed on the skin and the surface is gently pricked; the response is then measured and interpreted with your history.",
@@ -75,7 +75,7 @@ const services = [
     subtitle: "Nerve Conduction Velocity",
     text: "Measures how quickly electrical signals travel through your nerves.",
     points: ["Numbness or tingling", "Weakness assessment"],
-    image: "test-ncv.png",
+    image: "test-ncv.webp",
     imageAlt: "Clinician carrying out a nerve conduction study on a patient's arm",
     tagline: "See how your nerves are communicating.",
     overview: "A nerve conduction study measures responses to small electrical impulses delivered at the skin. It helps assess how signals travel through nerves in the arms or legs.",
@@ -245,7 +245,7 @@ export default function VitaSenseHome() {
             </div>
           </div>
           <div className="hero-art hero-visual-enter">
-            <Image className="hero-woman" src={`${basePath}/hero-neural-woman.png`} width={1216} height={1293} alt="Woman in profile illustrated with flowing diagnostic signal lines" priority />
+            <Image className="hero-woman" src={`${basePath}/hero-neural-woman.webp`} width={1216} height={1293} alt="Woman in profile illustrated with flowing diagnostic signal lines" priority />
           </div>
         </div>
       </section>

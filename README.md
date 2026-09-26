@@ -2,7 +2,7 @@
 
 [![Deploy to GitHub Pages](https://github.com/mohamed-imam/vita-sense/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/mohamed-imam/vita-sense/actions/workflows/deploy-pages.yml)
 
-A modern, responsive healthcare website for **VitaSense**, presenting professional nerve, allergy, and circulation testing with a calm, trustworthy visual identity.
+A responsive website for **VitaSense**, presenting nerve and allergy testing with a calm visual identity.
 
 ## Overview
 
@@ -11,12 +11,12 @@ The site is designed to help prospective clients quickly understand VitaSense's 
 ## Features
 
 - Responsive design for desktop, tablet, and mobile
-- Clear service pages for nerve, allergy, and circulation testing
+- Clear descriptions of available tests
 - Care-focused “Why VitaSense” section
 - Expandable frequently asked questions
 - Mobile navigation
 - Accessible form labels, keyboard interactions, and reduced-motion support
-- Appointment request experience ready to connect to an email or booking service
+- Appointment requests delivered through the VitaSense Google Apps Script
 - Search and social-sharing metadata
 - Custom VitaSense social preview image
 
@@ -26,7 +26,7 @@ The site is designed to help prospective clients quickly understand VitaSense's 
 - TypeScript
 - Vinext and Vite
 - Tailwind CSS entry point with custom responsive CSS
-- Static export suitable for GitHub Pages
+- Static export suitable for Cloudflare Pages and GitHub Pages
 
 ## Getting started
 
@@ -64,6 +64,7 @@ npm run build
 | `npm run start` | Run the production server |
 | `npm run test` | Build and run the rendered HTML test |
 | `npm run lint` | Check the codebase with ESLint |
+| `npm run typecheck` | Check TypeScript types |
 
 ## Project structure
 
@@ -93,16 +94,7 @@ The supplied logo is retained at `public/vitasense-logo.jpg`. Website-ready tran
 
 ## Deployment
 
-Every push to `main` runs the GitHub Pages workflow, builds a static site, and deploys the contents of `dist/client`.
-
-To enable the public test site:
-
-1. Make the GitHub repository public.
-2. Open **Settings > Pages** in the repository.
-3. Set **Source** to **GitHub Actions**.
-4. Push `main`, or run the workflow manually from the **Actions** tab.
-
-The test URL will be `https://mohamed-imam.github.io/vita-sense/`.
+The intended production host is Cloudflare Pages at `vita-sense.com`. Follow [DEPLOYMENT.md](DEPLOYMENT.md) for the Pages settings, form checks, and Squarespace DNS cutover. The existing GitHub Pages workflow remains available as a preview deployment from `main`.
 
 ## License
 

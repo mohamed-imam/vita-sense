@@ -15,6 +15,7 @@ export default function AppointmentForm({ reveal = false }: { reveal?: boolean }
   const [phoneError, setPhoneError] = useState(false);
   const messageDetailsRef = useRef<HTMLTextAreaElement>(null);
   const messagePayloadRef = useRef<HTMLInputElement>(null);
+  const responseFrameRef = useRef<HTMLIFrameElement>(null);
   const submissionTimeoutRef = useRef<number | undefined>(undefined);
   const submissionPendingRef = useRef(false);
 
@@ -24,13 +25,14 @@ export default function AppointmentForm({ reveal = false }: { reveal?: boolean }
         try { return new URL(event.origin).hostname; } catch { return ""; }
       })();
       const isGoogleScriptResponse = responseHost === "script.google.com" || responseHost.endsWith(".googleusercontent.com");
-      if (!isGoogleScriptResponse || event.data?.type !== "vitasense-form") return;
+      if (!isGoogleScriptResponse || event.source !== responseFrameRef.current?.contentWindow ||
+          !submissionPendingRef.current || event.data?.type !== "vitasense-form") return;
 
       if (submissionTimeoutRef.current !== undefined) window.clearTimeout(submissionTimeoutRef.current);
       submissionPendingRef.current = false;
       setSubmitting(false);
-      setSubmitError(!event.data.success);
-      setSent(Boolean(event.data.success));
+      setSubmitError(event.data.success !== true);
+      setSent(event.data.success === true);
     };
 
     window.addEventListener("message", handleFormResponse);
@@ -60,15 +62,6 @@ export default function AppointmentForm({ reveal = false }: { reveal?: boolean }
       setSubmitError(true);
     }, 12000);
   };
-  const handleFormFrameLoad = () => {
-    if (!submissionPendingRef.current) return;
-    submissionPendingRef.current = false;
-    if (submissionTimeoutRef.current !== undefined) window.clearTimeout(submissionTimeoutRef.current);
-    setSubmitting(false);
-    setSubmitError(false);
-    setSent(true);
-  };
-
   return (
     <>
       <form className="contact-form" data-reveal={reveal ? "" : undefined} action={appointmentEndpoint} method="POST" target="vitasense-form-target" acceptCharset="UTF-8" onSubmit={handleFormSubmit}>
@@ -111,7 +104,7 @@ export default function AppointmentForm({ reveal = false }: { reveal?: boolean }
           </>
         )}
       </form>
-      <iframe className="form-response-frame" name="vitasense-form-target" title="Appointment form response" onLoad={handleFormFrameLoad} />
+      <iframe ref={responseFrameRef} className="form-response-frame" name="vitasense-form-target" title="Appointment form response" />
     </>
   );
 }

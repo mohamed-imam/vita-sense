@@ -2,40 +2,20 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
-async function render() {
-  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
-  const { default: worker } = await import(workerUrl.href);
+const siteBase = process.env.GITHUB_ACTIONS === "true"
+  ? "https://mohamed-imam.github.io/vita-sense"
+  : "https://vita-sense.com";
 
-  return worker.fetch(
-    new Request("http://localhost/", {
-      headers: { accept: "text/html" },
-    }),
-    {
-      ASSETS: {
-        fetch: async () => new Response("Not found", { status: 404 }),
-      },
-    },
-    {
-      waitUntil() {},
-      passThroughOnException() {},
-    },
-  );
-}
-
-test("server-renders the VitaSense website", async () => {
-  const response = await render();
-  assert.equal(response.status, 200);
-  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
-
-  const html = await response.text();
+test("exports the VitaSense homepage for static hosting", async () => {
+  const html = await readFile(new URL("../dist/client/index.html", import.meta.url), "utf8");
   assert.match(html, /<title>VitaSense \| EEG, VNG, Allergy &amp; NCV Testing<\/title>/i);
   assert.match(html, /Clearer answers\./);
   assert.match(html, /Nerve Conduction Velocity/);
   assert.match(html, /Electroencephalogram/);
   assert.match(html, /Videonystagmography/);
   assert.match(html, /Skin Allergy Test/);
-  assert.match(html, /hero-neural-woman\.png/);
+  assert.match(html, /hero-neural-woman\.webp/);
+  assert.ok(html.includes(`rel="canonical" href="${siteBase}"`) || html.includes(`rel="canonical" href="${siteBase}/"`));
   assert.match(html, /action="https:\/\/script\.google\.com\/macros\/s\/AKfycbyBmeKwEsRM_m8ADtKL4uuDICQMXzzS6UV3mseb1wzdjLNNwDzuMRobOba1i6YYMubGtA\/exec"/);
   assert.match(html, /target="vitasense-form-target"/);
   assert.match(html, /name="website"/);
@@ -59,7 +39,7 @@ test("keeps the finished site free of starter scaffolding and forced scrolling",
 
   assert.match(page, /<VitaSenseHome \/>/);
   assert.match(layout, /VitaSense \| EEG, VNG, Allergy & NCV Testing/);
-  assert.match(home, /hero-neural-woman\.png/);
+  assert.match(home, /hero-neural-woman\.webp/);
   assert.doesNotMatch(css, /scroll-snap/);
   assert.doesNotMatch(home, /addEventListener\("wheel"|handleWheel/);
   assert.match(css, /prefers-reduced-motion/);
@@ -68,7 +48,7 @@ test("keeps the finished site free of starter scaffolding and forced scrolling",
   await Promise.all([
     access(new URL("../public/vitasense-logo.png", import.meta.url)),
     access(new URL("../public/vitasense-mark.png", import.meta.url)),
-    access(new URL("../public/hero-neural-woman.png", import.meta.url)),
+    access(new URL("../public/hero-neural-woman.webp", import.meta.url)),
     access(new URL("../public/og.png", import.meta.url)),
   ]);
   await assert.rejects(
@@ -78,6 +58,8 @@ test("keeps the finished site free of starter scaffolding and forced scrolling",
 
 test("exports a compact connect page with the requested US contact links", async () => {
   const html = await readFile(new URL("../dist/client/connect/index.html", import.meta.url), "utf8");
+  assert.ok(html.includes(`rel="canonical" href="${siteBase}/connect/"`));
+  if (process.env.GITHUB_ACTIONS !== "true") assert.doesNotMatch(html, /mohamed-imam\.github\.io/);
   assert.match(html, /Connect with VitaSense/);
   assert.match(html, /Start here/);
   assert.match(html, /Talk with us/);
@@ -89,4 +71,14 @@ test("exports a compact connect page with the requested US contact links", async
   assert.match(html, /https:\/\/www\.linkedin\.com\/in\/Vitasensetest/);
   assert.match(html, /mailto:info@vita-sense\.com/);
   assert.doesNotMatch(html, /\bNHS\b|<img[^>]*qr/i);
+});
+
+test("includes Cloudflare Pages metadata and optimized assets", async () => {
+  const headers = await readFile(new URL("../dist/client/_headers", import.meta.url), "utf8");
+  assert.match(headers, /X-Content-Type-Options: nosniff/);
+  assert.match(headers, /Cache-Control: public, max-age=31536000, immutable/);
+  await Promise.all([
+    "hero-neural-woman.webp", "test-eeg.webp", "test-vng.webp",
+    "test-allergy.webp", "test-ncv.webp", "robots.txt", "sitemap.xml",
+  ].map((name) => access(new URL(`../dist/client/${name}`, import.meta.url))));
 });
