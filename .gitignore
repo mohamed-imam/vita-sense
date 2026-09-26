@@ -40,5 +40,9 @@ yarn-error.log*
 /outputs/
 /work/
 /graphify-out/
+# local Graphify agent setup and source asset archive
+/AGENTS.md
+/.codex/hooks.json
+/public/logo.zip
 /.openai/
 /02a341d7-0256-490b-b721-a7044f245e65.jpg
