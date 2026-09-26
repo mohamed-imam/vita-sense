@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, CalendarDays, Globe2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Globe2 } from "lucide-react";
 import SocialLinks, { BrandIcon, channels } from "./SocialLinks";
 import HomeSectionLink from "./HomeSectionLink";
+import AppointmentRequest from "./AppointmentRequest";
 import "./connect.css";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -37,9 +38,8 @@ export default function ConnectPage() {
             <a className="connect-back" href={`${basePath}/`}><ArrowLeft size={16} aria-hidden="true" /> Website</a>
           </header>
           <div className="connect-hero">
-            <span className="connect-kicker">VITASENSE / CONNECT</span>
-            <h1>Connect.</h1>
-            <p>Testing, appointments, and direct contact.</p>
+            <h1>Let’s connect<span>.</span></h1>
+            <p>Questions about testing? We’re here to help.</p>
             <SocialLinks />
           </div>
         </div>
@@ -50,14 +50,10 @@ export default function ConnectPage() {
             <div className="connect-group-heading"><span>01</span><h2 id="connect-start">Start here</h2></div>
             <HomeSectionLink className="connect-row" section="services">
               <span className="connect-row-icon"><Globe2 size={20} strokeWidth={1.7} aria-hidden="true" /></span>
-              <span className="connect-row-copy"><strong>Explore our tests</strong><small>EEG · VNG · Skin allergy · NCV</small></span>
+              <span className="connect-row-copy"><strong>Explore our tests</strong><small>On our website</small></span>
               <ArrowRight className="connect-row-arrow" size={18} aria-hidden="true" />
             </HomeSectionLink>
-            <HomeSectionLink className="connect-row connect-row-accent" section="contact">
-              <span className="connect-row-icon"><CalendarDays size={20} strokeWidth={1.7} aria-hidden="true" /></span>
-              <span className="connect-row-copy"><strong>Request an appointment</strong><small>Tell us how we can help</small></span>
-              <ArrowRight className="connect-row-arrow" size={18} aria-hidden="true" />
-            </HomeSectionLink>
+            <AppointmentRequest />
           </section>
 
           <section className="connect-group" aria-labelledby="connect-talk">

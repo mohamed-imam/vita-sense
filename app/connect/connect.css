@@ -10,8 +10,8 @@
 .connect-back svg { transition: transform .2s ease; }
 .connect-back:hover svg { transform: translateX(-3px); }
 .connect-hero { padding: 8px 0 0; text-align: center; }
-.connect-kicker { color: #91dfda; font-size: .62rem; font-weight: 730; letter-spacing: .17em; }
 .connect-hero h1 { margin: 7px 0 3px; color: #fff; font-size: clamp(2.6rem, 7vw, 3.35rem); font-weight: 690; letter-spacing: -.06em; line-height: 1; }
+.connect-hero h1 span { color: #91dfda; }
 .connect-hero p { margin: 0; color: #c7d9dc; font-size: .85rem; }
 .social-strip-connect { margin-top: 13px; }
 .social-strip-connect .social-strip-list { display: flex; justify-content: center; gap: 10px; }
@@ -32,8 +32,10 @@
 .connect-group-heading > span { color: #13848a; font-size: .64rem; font-weight: 750; }
 .connect-group-heading h2 { margin: 0; color: #1b3040; font-size: 1rem; font-weight: 680; letter-spacing: -.025em; }
 .connect-row { display: flex; align-items: center; gap: 12px; min-height: 57px; padding: 8px 12px; color: #1d3442; background: #fff; border: 1px solid #e4e9eb; border-radius: 14px; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.connect-appointment-trigger { width: 100%; font: inherit; text-align: left; cursor: pointer; }
 .connect-row + .connect-row { margin-top: 6px; }
 .connect-row:hover { transform: translateY(-2px); border-color: #a5d5d4; box-shadow: 0 9px 22px rgba(9,29,45,.08); }
+.connect-row:focus-visible { outline: 3px solid #7bd8d2; outline-offset: 2px; }
 .connect-row:active { transform: scale(.99); }
 .connect-row-icon { width: 37px; height: 37px; display: grid; place-items: center; flex: none; color: #087e84; background: #e7f5f3; border-radius: 10px; }
 .connect-row-icon svg { width: 20px; height: 20px; }
@@ -52,6 +54,21 @@
 .connect-icon-whatsapp { background: #e4f5ed; }
 .connect-icon-email { background: #e8f3f5; }
 .connect-footer { padding: 14px 0 0; color: #81919a; background: transparent; font-size: .67rem; text-align: center; }
+.appointment-dialog { left: max(18px, calc((100vw - 760px) / 2)); right: max(18px, calc((100vw - 760px) / 2)); }
+.appointment-dialog-inner { max-width: 680px; margin: 0 auto; padding: 0 24px 30px; }
+.appointment-dialog-topline { position: sticky; z-index: 5; top: 0; min-height: 78px; display: flex; align-items: center; justify-content: space-between; color: #66717a; background: #fbfbfd; font-size: .76rem; font-weight: 600; }
+.appointment-dialog .detail-close { position: static; margin-right: 0; }
+.appointment-dialog-intro { margin: 4px 0 24px; text-align: center; }
+.appointment-dialog-intro h2 { margin: 0; color: #1b3040; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -.055em; }
+.appointment-dialog-intro p { margin: 7px 0 0; color: #65737d; font-size: .9rem; }
+.appointment-dialog .contact-form { min-height: 0; box-shadow: 0 18px 48px rgba(9,29,45,.1); }
+@media (max-width: 760px) {
+  .appointment-dialog { inset: 0; }
+  .appointment-dialog-inner { padding: 0 18px 24px; }
+  .appointment-dialog-topline { min-height: 64px; }
+  .appointment-dialog .detail-close { width: 42px; height: 42px; }
+  .appointment-dialog-intro { margin-bottom: 18px; }
+}
 @media (max-width: 560px) {
   .connect-page { display: flex; flex-direction: column; }
   .connect-blue { flex: none; }
@@ -75,6 +92,9 @@
   .connect-row-copy strong { font-size: .82rem; }
   .connect-row-copy small { font-size: .65rem; }
   .connect-footer { display: none; }
+  .appointment-dialog-inner { padding: 0 12px 20px; }
+  .appointment-dialog-intro p { font-size: .8rem; }
+  .appointment-dialog .contact-form { padding: 22px 18px; }
 }
 @media (max-height: 750px) and (max-width: 560px) {
   .connect-blue .connect-shell { padding-top: 6px; padding-bottom: 16px; }
