@@ -229,26 +229,24 @@ export default function VitaSenseHome() {
       </header>
 
       <section className="hero" id="top">
-        <div className="hero-copy hero-enter">
-          <div className="eyebrow"><span /> Diagnostic care, made personal</div>
-          <h1>Clearer answers.<br /><em>Confident next steps.</em></h1>
-          <p className="hero-lead">Expert EEG, VNG, allergy and nerve testing. A more thoughtful way to understand what your body is telling you.</p>
-          <div className="hero-actions">
-            <a className="button button-primary" href="#contact" onClick={goToSection("contact")}>Request an appointment <ArrowRight aria-hidden="true" size={17} /></a>
-            <a className="text-link" href="#services" onClick={goToSection("services")}>Explore our tests <ArrowDown className="down-arrow" aria-hidden="true" size={17} /></a>
+        <div className="hero-layout">
+          <div className="hero-copy hero-enter">
+            <div className="eyebrow"><span /> Diagnostic care, made personal</div>
+            <h1>Clearer answers.<br /><em>Confident next steps.</em></h1>
+            <p className="hero-lead">Expert EEG, VNG, allergy and nerve testing. A more thoughtful way to understand what your body is telling you.</p>
+            <div className="hero-actions">
+              <a className="button button-primary" href="#contact" onClick={goToSection("contact")}>Request an appointment <ArrowRight aria-hidden="true" size={17} /></a>
+              <a className="text-link" href="#services" onClick={goToSection("services")}>Explore our tests <ArrowDown className="down-arrow" aria-hidden="true" size={17} /></a>
+            </div>
+            <div className="trust-row" aria-label="Our commitments">
+              <span><ShieldCheck aria-hidden="true" size={16} /> Professional testing</span>
+              <span><CheckCircle2 aria-hidden="true" size={16} /> Clear explanations</span>
+              <span><HeartPulse aria-hidden="true" size={16} /> Care-led experience</span>
+            </div>
           </div>
-          <div className="trust-row" aria-label="Our commitments">
-            <span><ShieldCheck aria-hidden="true" size={16} /> Professional testing</span>
-            <span><CheckCircle2 aria-hidden="true" size={16} /> Clear explanations</span>
-            <span><HeartPulse aria-hidden="true" size={16} /> Care-led experience</span>
+          <div className="hero-art hero-visual-enter">
+            <Image className="hero-woman" src={`${basePath}/hero-neural-woman.png`} width={1216} height={1293} alt="Woman in profile illustrated with flowing diagnostic signal lines" priority />
           </div>
-        </div>
-
-        <div className="hero-visual hero-visual-enter" aria-label="Illustration of VitaSense diagnostic testing">
-          <div className="hero-map-intro"><span aria-hidden="true" /> A clearer picture starts here</div>
-          <div className="hero-visual-title" aria-hidden="true">Every signal<br />tells a story.</div>
-          <Image className="hero-woman" src={`${basePath}/hero-neural-woman.png`} width={1216} height={1293} alt="Woman in profile illustrated with flowing diagnostic signal lines" priority />
-          <a className="hero-visual-cta" href="#services" onClick={goToSection("services")}>Discover the tests <ArrowDown aria-hidden="true" size={18} /></a>
         </div>
       </section>
 
@@ -280,7 +278,7 @@ export default function VitaSenseHome() {
       <section ref={detailPanelRef} className={`service-detail${detailOpen ? " is-open" : ""}`} style={{ "--detail-origin-x": detailOrigin.x, "--detail-origin-y": detailOrigin.y } as React.CSSProperties} role="dialog" aria-modal={detailOpen} aria-label={`${activeDetail.title} test details`} aria-hidden={!detailOpen} inert={!detailOpen}>
         <div className="detail-inner">
           <div className="detail-topline"><span>VitaSense / Tests / {activeDetail.title}</span><button ref={detailCloseRef} type="button" className="detail-close" aria-label="Close test details and return to home" onClick={() => setDetailOpen(false)}><X size={22} strokeWidth={1.7} /></button></div>
-          <div className="detail-intro"><div className="section-kicker">The test, explained</div><h2>{activeDetail.title}<span>.</span></h2><p>{activeDetail.tagline}</p></div>
+          <div className="detail-intro"><h2>{activeDetail.title}<span>.</span></h2><p>{activeDetail.tagline}</p></div>
           <div className="detail-hero-image"><Image src={`${basePath}/${activeDetail.image}`} width={1664} height={1024} alt={activeDetail.imageAlt} /></div>
           <div className="detail-lead-grid"><div className="detail-index">{activeDetail.number} / 04<br />{activeDetail.subtitle}</div><div><h3>What is {activeDetail.title}?</h3><p>{activeDetail.overview}</p></div></div>
           <div className="detail-info-grid">
