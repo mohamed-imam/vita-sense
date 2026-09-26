@@ -248,7 +248,17 @@ export default function VitaSenseHome() {
           <div className="hero-map-intro"><span aria-hidden="true" /> A clearer picture starts here</div>
           <div className="hero-visual-title" aria-hidden="true">Every signal<br />tells a story.</div>
           <Image className="hero-woman" src={`${basePath}/hero-neural-woman.png`} width={1216} height={1293} alt="Woman in profile illustrated with flowing diagnostic signal lines" priority />
-          <a className="hero-visual-cta" href="#services" onClick={goToSection("services")}>Discover the tests <ArrowDown aria-hidden="true" size={18} /></a>
+          <div className="hero-signal-points" aria-hidden="true"><span /><span /><span /><span /></div>
+          <div className="hero-test-selector">
+            <p>Explore a test</p>
+            <div className="hero-test-options">
+              {services.map((service, index) => (
+                <button type="button" className="hero-test-option" aria-label={`Explore ${service.title} details`} onClick={(event) => showService(index, event.currentTarget)} key={service.title}>
+                  <span>{service.number}</span><strong>{service.shortTitle}</strong><ArrowRight size={15} aria-hidden="true" />
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
